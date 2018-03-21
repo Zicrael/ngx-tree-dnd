@@ -1,0 +1,96 @@
+/* You can add global styles to this file, and also import other style files */
+.tree-title {
+    position: relative;
+    padding-left: 11px;
+}
+.d-flex {
+    display: flex;
+}
+.d-inline-flex {
+    display: inline-flex;
+}
+.tree-content {
+    margin-left: 10px;
+    border-left: 3px solid #444 ;
+    position: relative;
+}
+.tree-title::before {
+    position: absolute;
+    left: 0;
+    top: calc(50% - 1.5px);
+    background-color: #444;
+    height: 3px;
+    width: 10px;
+    align-items: center;
+    content: '';
+}
+.btn-add-small, .btn-remove-small, .btn-edit-small {
+    display: flex;
+    position: relative;
+    align-items: center;
+    margin-left: 4px;
+    justify-content: center;
+    background-color: #28a745;
+    border:none;
+    border-radius: 2px;
+    outline-color: #28a745;
+    height: 16px;
+    width: 16px;
+    cursor: pointer;
+    padding: 0;
+}
+.btn-remove-small {
+    background-color: #d33;
+    outline-color: #d33;
+}
+.btn-edit-small {
+    background-color: #DCDCDC;
+    outline-color: #DCDCDC;
+}
+.btn-edit-small img {
+    height: 15px;
+    width: 15px;
+}
+.btn-add-small span:first-child {
+    position: absolute;
+    height: 2px;
+    width: 8px;
+    background-color: #fff;
+}
+.btn-remove-small span:first-child {
+    position: absolute;
+    height: 2px;
+    width: 8px;
+    background-color: #fff;
+    transform: rotate( 45deg );
+}
+.btn-add-small span:last-child {
+    position: absolute;
+    height: 2px;
+    width: 8px;
+    transform: rotate(90deg);
+    background-color: #fff;
+}
+.btn-remove-small span:last-child {
+    position: absolute;
+    height: 2px;
+    width: 8px;
+    background-color: #fff;
+    transform: rotate( 135deg );
+}
+
+.input-add {
+    height: 25px;
+    padding: 5px;
+    font-size: 16px;
+    font-weight: 400;
+}
+.in-swal-tips {
+    display: flex ;
+    justify-content: center;
+    width: 100%;
+    margin-bottom: 15px;
+}
+.text-center {
+    text-align: center;
+}

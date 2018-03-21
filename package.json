@@ -1,6 +1,6 @@
 {
   "name": "ngx-tree-dnd",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "scripts": {
     "build": "gulp build",
     "build:watch": "gulp",
@@ -16,7 +16,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/Zicrael/angular-tree-dnd"
+    "url": "https://github.com/Zicrael/ngx-tree-dnd"
   },
   "author": {
     "name": "Yaroslav Kikot",
@@ -27,13 +27,14 @@
   ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Zicrael/angular-tree-dnd/issues"
+    "url": "https://github.com/Zicrael/ngx-tree-dnd/issues"
   },
   "devDependencies": {
     "@angular/common": "^5.0.0",
     "@angular/compiler": "^5.0.0",
     "@angular/compiler-cli": "^5.0.0",
     "@angular/core": "^5.0.0",
+    "@angular/forms": "^5.2.9",
     "@angular/platform-browser": "^5.0.0",
     "@angular/platform-browser-dynamic": "^5.0.0",
     "@compodoc/compodoc": "^1.0.0-beta.10",

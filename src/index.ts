@@ -1,35 +1,39 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SampleComponent } from './sample.component';
-import { SampleDirective } from './sample.directive';
-import { SamplePipe } from './sample.pipe';
-import { SampleService } from './sample.service';
+import { NgxTreeComponent } from './ngx-tree-dnd.component';
+import { NgxTreeChildrenComponent } from './ngx-tree-dnd-children.component';
+import { NgxTreeDirective } from './ngx-tree-dnd.directive';
+import { NgxTreePipe } from './ngx-tree-dnd.pipe';
+import { NgxTreeService } from './ngx-tree-dnd.service';
+import { FormBuilder } from '@angular/forms';
 
-export * from './sample.component';
-export * from './sample.directive';
-export * from './sample.pipe';
-export * from './sample.service';
+export * from './ngx-tree-dnd.component';
+export * from './ngx-tree-dnd.directive';
+export * from './ngx-tree-dnd.pipe';
+export * from './ngx-tree-dnd.service';
 
 @NgModule({
   imports: [
     CommonModule
   ],
   declarations: [
-    SampleComponent,
-    SampleDirective,
-    SamplePipe
+    NgxTreeComponent,
+    NgxTreeChildrenComponent,
+    NgxTreeDirective,
+    NgxTreePipe
   ],
   exports: [
-    SampleComponent,
-    SampleDirective,
-    SamplePipe
+    NgxTreeComponent,
+    NgxTreeChildrenComponent,
+    NgxTreeDirective,
+    NgxTreePipe
   ]
 })
-export class SampleModule {
+export class NgxTreeModule {
   static forRoot(): ModuleWithProviders {
     return {
-      ngModule: SampleModule,
-      providers: [SampleService]
+      ngModule: NgxTreeModule,
+      providers: [NgxTreeService, FormBuilder]
     };
   }
 }

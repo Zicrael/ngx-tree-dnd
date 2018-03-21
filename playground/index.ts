@@ -6,18 +6,17 @@ import { NgModule } from '@angular/core';
 import { Component } from '@angular/core';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
-import { SampleModule }  from 'ngx-tree-dnd';
 
 @Component({
-  selector: 'app',
-  template: `<sample-component></sample-component>`
+  selector: 'ngx-tree-component',
+  template: `<ngx-tree-dnd-component></ngx-tree-dnd-component>`
 })
 class AppComponent {}
 
 @NgModule({
   bootstrap: [ AppComponent ],
   declarations: [ AppComponent ],
-  imports: [ BrowserModule, SampleModule ]
+  imports: [ BrowserModule ]
 })
 class AppModule {}
 

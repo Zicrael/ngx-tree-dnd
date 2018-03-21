@@ -1,5 +1,8 @@
 # ngx-tree-dnd
 
+## IN PROGRESS (not ready yet!) , Sorry for the inconvenience
+
+
 ## Installation
 
 To install this library, run:
