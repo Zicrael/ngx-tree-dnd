@@ -13,11 +13,14 @@ export class NgxTreeService {
   onDragStart = new Subject<any>();
   onDrop = new Subject<any>();
   onAllowDrop = new Subject<any>();
+  onAddItem = new Subject<any>();
+  onRenameItem = new Subject<any>();
+  onRemoveItem = new Subject<any>();
   constructor() {
   }
-  getLocalData(userTree) {
+  getLocalData(item) {
     const data = new Observable(observer => {
-    this.treeStorage = userTree;
+    this.treeStorage = item;
       if ( this.treeStorage && this.treeStorage !== null ) {
         observer.next(this.treeStorage);
       } else {
@@ -49,18 +52,25 @@ export class NgxTreeService {
         childrens: []
       };
       this.treeStorage.push(createObj);
-     // localStorage.setItem('userTree', JSON.stringify(this.treeStorage));
+      const eventEmit = {
+        element: createObj,
+        parent: this.treeStorage
+      };
+      this.onAddItem.next(eventEmit);
     } else {
       // from children
-
       const createObj: TreeModel = {
         id,
         name,
         childrens: []
       };
-      this.elementFinder(this.treeStorage, parent);
+      this.elementFinder(this.treeStorage, parent.id);
       this.selectedElement.childrens.push(createObj);
-      // localStorage.setItem('userTree', JSON.stringify(this.treeStorage));
+      const eventEmit = {
+        element: createObj,
+        parentList: this.selectedElement
+      };
+      this.onAddItem.next(eventEmit);
     }
     this.clearAction();
   }
@@ -68,13 +78,21 @@ export class NgxTreeService {
     this.elementFinder(this.treeStorage, id);
     const i = this.listOfSelectedElement.indexOf(this.selectedElement);
     this.listOfSelectedElement.splice(i, 1);
-    localStorage.setItem('userTree', JSON.stringify(this.treeStorage));
+    const eventEmit = {
+      element: this.selectedElement,
+      parentList: this.listOfSelectedElement
+    };
+    this.onRemoveItem.next(eventEmit);
     this.clearAction();
   }
   renameItem(name, id) {
     this.elementFinder(this.treeStorage, id);
     this.selectedElement.name = name;
-    // localStorage.setItem('userTree', JSON.stringify(this.treeStorage));
+    const eventEmit = {
+      element: this.selectedElement,
+      parentList: this.listOfSelectedElement
+    };
+    this.onRenameItem.next(eventEmit);
     this.clearAction();
   }
   dropAction(el, to) {
@@ -82,11 +100,11 @@ export class NgxTreeService {
       this.deleteItem(el.id);
       this.elementFinder(this.treeStorage, to.id);
       this.selectedElement.childrens.push(el);
-      // localStorage.setItem('userTree', JSON.stringify(this.treeStorage));
+      this.clearAction();
     } else {
+      this.clearAction();
       return false;
     }
-    this.clearAction();
   }
   dropOnRoot(el) {
     this.deleteItem(el.id);
