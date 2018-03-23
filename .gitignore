@@ -29,8 +29,9 @@ Desktop.ini
 **/*.ngfactory.ts
 
 # Build files
-dist/*
-playground/*
+
+
 
 # Playground tmp files
 .playground
+playground

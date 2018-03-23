@@ -1,0 +1,28 @@
+{
+  "name": "ngx-tree-dnd",
+  "version": "0.3.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Zicrael/ngx-tree-dnd"
+  },
+  "author": {
+    "name": "Yaroslav Kikot",
+    "email": "13ccdd@gmail.com"
+  },
+  "keywords": [
+    "angular2+, angular, angular 4, angular 5, angular-tree, angular-tree-dnd, anuglar-dnd, tree-dnd "
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Zicrael/ngx-tree-dnd/issues"
+  },
+  "main": "ngx-tree-dnd.umd.js",
+  "module": "ngx-tree-dnd.js",
+  "jsnext:main": "ngx-tree-dnd.js",
+  "typings": "ngx-tree-dnd.d.ts",
+  "peerDependencies": {
+    "@angular/core": "^4.0.0",
+    "rxjs": "^5.1.0",
+    "zone.js": "^0.8.4"
+  }
+}
