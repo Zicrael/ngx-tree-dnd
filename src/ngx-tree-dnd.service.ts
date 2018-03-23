@@ -1,3 +1,8 @@
+/*
+ Copyright (C) 2018 Yaroslav Kikot
+ This project is licensed under the terms of the MIT license.
+ https://github.com/Zicrael/ngx-tree-dnd
+ */
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
@@ -16,6 +21,7 @@ export class NgxTreeService {
   onAddItem = new Subject<any>();
   onRenameItem = new Subject<any>();
   onRemoveItem = new Subject<any>();
+  _config = new BehaviorSubject<any>(null);
   constructor() {
   }
   getLocalData(item) {
@@ -97,10 +103,11 @@ export class NgxTreeService {
   }
   dropAction(el, to) {
     if (el !== to) {
-      this.deleteItem(el.id);
-      this.elementFinder(this.treeStorage, to.id);
-      this.selectedElement.childrens.push(el);
-      this.clearAction();
+
+        this.deleteItem(el.id);
+        this.elementFinder(this.treeStorage, to.id);
+        this.selectedElement.childrens.push(el);
+        this.clearAction();
     } else {
       this.clearAction();
       return false;

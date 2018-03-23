@@ -1,4 +1,5 @@
 import { Observable } from 'rxjs/Observable';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/operator/map';
 import { TreeModel } from './tree-view.model';
@@ -13,6 +14,7 @@ export declare class NgxTreeService {
     onAddItem: Subject<any>;
     onRenameItem: Subject<any>;
     onRemoveItem: Subject<any>;
+    _config: BehaviorSubject<any>;
     constructor();
     getLocalData(item: any): Observable<{}>;
     elementFinder(list: any, id: any): void;

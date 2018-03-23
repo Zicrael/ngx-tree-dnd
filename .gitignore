@@ -29,7 +29,7 @@ Desktop.ini
 **/*.ngfactory.ts
 
 # Build files
-
+./gulpfile.js
 
 
 # Playground tmp files

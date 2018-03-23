@@ -1,6 +1,6 @@
 import { OnInit, EventEmitter } from '@angular/core';
 import { NgxTreeService } from './ngx-tree-dnd.service';
-import { TreeModel } from './tree-view.model';
+import { TreeModel, TreeConfig } from './tree-view.model';
 import { FormBuilder } from '@angular/forms';
 import { NgxTreeChildrenComponent } from './ngx-tree-dnd-children.component';
 export declare class NgxTreeComponent implements OnInit {
@@ -8,6 +8,7 @@ export declare class NgxTreeComponent implements OnInit {
     private fb;
     treeView: TreeModel;
     type: string;
+    _config: TreeConfig;
     child: NgxTreeChildrenComponent;
     ondragstart: EventEmitter<any>;
     ondrop: EventEmitter<any>;
@@ -15,8 +16,11 @@ export declare class NgxTreeComponent implements OnInit {
     onadditem: EventEmitter<any>;
     onrenameitem: EventEmitter<any>;
     onremoveitem: EventEmitter<any>;
-    constructor(treeService: NgxTreeService, fb: FormBuilder);
+    config: TreeConfig;
     treeData: TreeModel[];
+    constructor(treeService: NgxTreeService, fb: FormBuilder);
+    setConfig(config: any): void;
+    setValue(item: any, config: any): void;
     enableSubscribers(): void;
     getTreeData(userTree: any): void;
     addRootItem(): void;
