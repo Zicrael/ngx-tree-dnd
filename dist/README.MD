@@ -1,7 +1,7 @@
-# ngx-tree-dnd  [![npm version](https://badge.fury.io/js/ngx-tree-dnd.svg)](https://badge.fury.io/js/ngx-tree-dnd) [![npm monthly downloads](https://img.shields.io/npm/dm/ngx-tree-dnd.svg?style=flat-square)](https://www.npmjs.com/package/ngx-tree-dnd)
+# ngx-tree-dnd  [![npm version](https://badge.fury.io/js/ngx-tree-dnd.svg)](https://badge.fury.io/js/ngx-tree-dnd) [![npm monthly downloads](https://img.shields.io/npm/dm/ngx-tree-dnd.svg?style=flat-square)](https://www.npmjs.com/package/ngx-tree-dnd) [![Dependency Status](https://david-dm.org/zicrael/ngx-tree-dnd.svg)](https://david-dm.org/zicrael/ngx-tree-dnd)
 
-[![Dependency Status](https://david-dm.org/zicrael/ngx-tree-dnd.svg)](https://david-dm.org/zicrael/ngx-tree-dnd)
-[![devDependency Status](https://david-dm.org/zicrael/ngx-tree-dnd/dev-status.svg)](https://david-dm.org/zicrael/ngx-tree-dnd#info=devDependencies)
+Angular 5 support tree with drag-and-drop, no dependencies, AoT compilation. Its simple and fast.
+
 ## Installation
 
 To install library, run:
@@ -10,7 +10,7 @@ To install library, run:
 $ npm install ngx-tree-dnd --save
 ```
 
-## Inport NgxTreeModule module
+## Import NgxTreeModule module
 
 Import DndModule.forRoot() in the NgModule of your application. The forRoot method is a convention
 for modules that provide a singleton service.
@@ -252,7 +252,7 @@ in you component file:
     config =  {
       enableDragging: true, // enable / disable dragging elements
       setRootTitle: "I am name of the root title", // set title root name.
-      enableShowHideBtns: true,  // enable / disable shpw/hide tree elements button.
+      enableShowHideBtns: true,  // enable / disable show/hide tree elements button.
       showItemActionBtns: true, // enable / disable item action buttons.
       showAddRootBtn: true, // enable / disable add root tree button.
       showAddItemButton: true, // enable / disable add children button.
