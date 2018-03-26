@@ -1,6 +1,6 @@
 {
   "name": "ngx-tree-dnd",
-  "version": "0.1.1",
+  "version": "1.0.3",
   "scripts": {
     "build": "gulp build",
     "build:watch": "gulp",
