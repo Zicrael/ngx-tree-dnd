@@ -103,11 +103,22 @@ export class NgxTreeService {
   }
   dropAction(el, to) {
     if (el !== to) {
-
+      if (el.childrens.length > 0) {
+        this.elementFinder(el.childrens, to.id);
+        if (this.selectedElement.id !== to.id) {
+          this.deleteItem(el.id);
+          this.elementFinder(this.treeStorage, to.id);
+          this.selectedElement.childrens.push(el);
+          this.clearAction();
+        } else {
+          return false;
+        }
+      } else {
         this.deleteItem(el.id);
         this.elementFinder(this.treeStorage, to.id);
         this.selectedElement.childrens.push(el);
         this.clearAction();
+      }
     } else {
       this.clearAction();
       return false;
