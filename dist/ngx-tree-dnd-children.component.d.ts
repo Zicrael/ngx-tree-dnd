@@ -1,6 +1,6 @@
 import { OnInit } from '@angular/core';
 import { NgxTreeService } from './ngx-tree-dnd.service';
-import { TreeModel, TreeConfig } from './tree-view.model';
+import { TreeModel, TreeConfig, TreeItemOptions } from './tree-view.model';
 import { FormGroup, FormBuilder } from '@angular/forms';
 export declare class NgxTreeChildrenComponent implements OnInit {
     private treeService;
@@ -13,11 +13,15 @@ export declare class NgxTreeChildrenComponent implements OnInit {
     isDragable: boolean;
     renameForm: FormGroup;
     _config: TreeConfig;
+    itemOptions: TreeItemOptions;
     item: TreeModel;
     constructor(treeService: NgxTreeService, fb: FormBuilder);
+    setOptions(options: any): void;
+    setValue(item: any, options: any): void;
     checkFloatItem(): void;
     createForm(): void;
     onDragStart(event: any, item: any): void;
+    onDragEnd(event: any, item: any): void;
     onDrop(event: any, item: any): void;
     allowDrop(event: any): void;
     submitAdd(name: any, type: any): void;

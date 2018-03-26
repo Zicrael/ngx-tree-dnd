@@ -15,14 +15,17 @@ export class NgxTreeService {
   listOfSelectedElement: TreeModel[];
   selectedElement: TreeModel;
   isDragging: TreeModel;
+  globalPositionCounter: number;
   onDragStart = new Subject<any>();
   onDrop = new Subject<any>();
   onAllowDrop = new Subject<any>();
+  onDragEnd = new Subject<any>();
   onAddItem = new Subject<any>();
   onRenameItem = new Subject<any>();
   onRemoveItem = new Subject<any>();
   _config = new BehaviorSubject<any>(null);
   constructor() {
+    this.globalPositionCounter = 0;
   }
   getLocalData(item) {
     const data = new Observable(observer => {
@@ -101,30 +104,31 @@ export class NgxTreeService {
     this.onRenameItem.next(eventEmit);
     this.clearAction();
   }
+  startDragging () {
+    this.elementFinder(this.treeStorage, this.isDragging.id);
+    this.selectedElement.options.currentlyDragging = true;
+  }
   dropAction(el, to) {
     if (el !== to) {
-      if (el.childrens.length > 0) {
-        this.elementFinder(el.childrens, to.id);
-        if (this.selectedElement.id !== to.id) {
-          this.deleteItem(el.id);
-          this.elementFinder(this.treeStorage, to.id);
-          this.selectedElement.childrens.push(el);
-          this.clearAction();
-        } else {
-          return false;
-        }
-      } else {
+        el.options.currentlyDragging = false;
         this.deleteItem(el.id);
         this.elementFinder(this.treeStorage, to.id);
         this.selectedElement.childrens.push(el);
         this.clearAction();
-      }
     } else {
       this.clearAction();
+      el.options.currentlyDragging = false;
       return false;
     }
   }
+  dragEndAction(el) {
+    if ( el ) {
+      el.options.currentlyDragging = false;
+    }
+    return false;
+  }
   dropOnRoot(el) {
+    el.options.currentlyDragging = false;
     this.deleteItem(el.id);
     this.treeStorage.push(el);
     this.clearAction();

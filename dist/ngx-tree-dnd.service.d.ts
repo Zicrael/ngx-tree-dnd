@@ -8,9 +8,11 @@ export declare class NgxTreeService {
     listOfSelectedElement: TreeModel[];
     selectedElement: TreeModel;
     isDragging: TreeModel;
+    globalPositionCounter: number;
     onDragStart: Subject<any>;
     onDrop: Subject<any>;
     onAllowDrop: Subject<any>;
+    onDragEnd: Subject<any>;
     onAddItem: Subject<any>;
     onRenameItem: Subject<any>;
     onRemoveItem: Subject<any>;
@@ -21,7 +23,9 @@ export declare class NgxTreeService {
     addNewItem(id: any, name: any, type: any, parent?: any): void;
     deleteItem(id: any): void;
     renameItem(name: any, id: any): void;
+    startDragging(): void;
     dropAction(el: any, to: any): boolean;
+    dragEndAction(el: any): boolean;
     dropOnRoot(el: any): void;
     clearAction(): void;
 }

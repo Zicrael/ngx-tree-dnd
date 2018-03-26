@@ -14,10 +14,12 @@ var NgxTreeService = (function () {
         this.onDragStart = new Subject.Subject();
         this.onDrop = new Subject.Subject();
         this.onAllowDrop = new Subject.Subject();
+        this.onDragEnd = new Subject.Subject();
         this.onAddItem = new Subject.Subject();
         this.onRenameItem = new Subject.Subject();
         this.onRemoveItem = new Subject.Subject();
         this._config = new BehaviorSubject.BehaviorSubject(null);
+        this.globalPositionCounter = 0;
     }
     /**
      * @param {?} item
@@ -152,6 +154,16 @@ var NgxTreeService = (function () {
         this.clearAction();
     };
     /**
+     * @return {?}
+     */
+    NgxTreeService.prototype.startDragging = /**
+     * @return {?}
+     */
+    function () {
+        this.elementFinder(this.treeStorage, this.isDragging.id);
+        this.selectedElement.options.currentlyDragging = true;
+    };
+    /**
      * @param {?} el
      * @param {?} to
      * @return {?}
@@ -163,29 +175,31 @@ var NgxTreeService = (function () {
      */
     function (el, to) {
         if (el !== to) {
-            if (el.childrens.length > 0) {
-                this.elementFinder(el.childrens, to.id);
-                if (this.selectedElement.id !== to.id) {
-                    this.deleteItem(el.id);
-                    this.elementFinder(this.treeStorage, to.id);
-                    this.selectedElement.childrens.push(el);
-                    this.clearAction();
-                }
-                else {
-                    return false;
-                }
-            }
-            else {
-                this.deleteItem(el.id);
-                this.elementFinder(this.treeStorage, to.id);
-                this.selectedElement.childrens.push(el);
-                this.clearAction();
-            }
+            el.options.currentlyDragging = false;
+            this.deleteItem(el.id);
+            this.elementFinder(this.treeStorage, to.id);
+            this.selectedElement.childrens.push(el);
+            this.clearAction();
         }
         else {
             this.clearAction();
+            el.options.currentlyDragging = false;
             return false;
         }
+    };
+    /**
+     * @param {?} el
+     * @return {?}
+     */
+    NgxTreeService.prototype.dragEndAction = /**
+     * @param {?} el
+     * @return {?}
+     */
+    function (el) {
+        if (el) {
+            el.options.currentlyDragging = false;
+        }
+        return false;
     };
     /**
      * @param {?} el
@@ -196,6 +210,7 @@ var NgxTreeService = (function () {
      * @return {?}
      */
     function (el) {
+        el.options.currentlyDragging = false;
         this.deleteItem(el.id);
         this.treeStorage.push(el);
         this.clearAction();
@@ -228,9 +243,9 @@ var NgxTreeChildrenComponent = (function () {
         this.treeService = treeService;
         this.fb = fb;
         this.type = 'children';
-        this.isHidden = false;
         this.treeService._config.subscribe(function (config) {
             _this._config = config;
+            _this.isDragable = _this._config.enableDragging;
             _this.createForm();
         });
     }
@@ -240,12 +255,52 @@ var NgxTreeChildrenComponent = (function () {
          * @return {?}
          */
         function (item) {
+            this.itemOptions = {
+                href: '#',
+                isHidden: false,
+                currentlyDragging: false
+            };
+            if (item.options) {
+                this.setOptions(item.options);
+                item.options = this.itemOptions;
+            }
+            else {
+                item.options = this.itemOptions;
+            }
             this._item = item;
+            this.isHidden = this._item.options.isHidden;
             this.checkFloatItem();
         },
         enumerable: true,
         configurable: true
     });
+    /**
+     * @param {?} options
+     * @return {?}
+     */
+    NgxTreeChildrenComponent.prototype.setOptions = /**
+     * @param {?} options
+     * @return {?}
+     */
+    function (options) {
+        for (var _i = 0, _a = Object.keys(options); _i < _a.length; _i++) {
+            var key = _a[_i];
+            this.setValue(key, options);
+        }
+    };
+    /**
+     * @param {?} item
+     * @param {?} options
+     * @return {?}
+     */
+    NgxTreeChildrenComponent.prototype.setValue = /**
+     * @param {?} item
+     * @param {?} options
+     * @return {?}
+     */
+    function (item, options) {
+        this.itemOptions[item] = options[item];
+    };
     /**
      * @return {?}
      */
@@ -292,6 +347,7 @@ var NgxTreeChildrenComponent = (function () {
             target: item
         };
         event.stopPropagation();
+        this.treeService.startDragging();
         this.treeService.onDragStart.next(eventObj);
         // const allowed = document.getElementsByClassName('tree-title');
         // const  arr = Array.prototype.slice.call( allowed );
@@ -299,6 +355,25 @@ var NgxTreeChildrenComponent = (function () {
         // for (const i of arr) {
         //   i.style.border = '1px dashed grey';
         // }
+    };
+    /**
+     * @param {?} event
+     * @param {?} item
+     * @return {?}
+     */
+    NgxTreeChildrenComponent.prototype.onDragEnd = /**
+     * @param {?} event
+     * @param {?} item
+     * @return {?}
+     */
+    function (event, item) {
+        var /** @type {?} */ dragItem = this.treeService.isDragging;
+        this.treeService.dragEndAction(dragItem);
+        var /** @type {?} */ eventObj = {
+            event: event,
+            target: item
+        };
+        this.treeService.onDragEnd.next(eventObj);
     };
     /**
      * @param {?} event
@@ -360,7 +435,6 @@ var NgxTreeChildrenComponent = (function () {
             this.showError = false;
             this.treeService.renameItem(this.renameForm.value.name, item.id);
             this.isEdit = false;
-            console.log();
         }
         else {
             this.showError = true;
@@ -396,7 +470,7 @@ var NgxTreeChildrenComponent = (function () {
     NgxTreeChildrenComponent.decorators = [
         { type: core.Component, args: [{
                     selector: 'ngx-tree-children',
-                    template: "\n  <div class='tree-child' *ngIf=\"_item && _config\"  [draggable]=\"_config.enableDragging\" (dragstart)=\"onDragStart($event, _item)\" >\n  <div class='pos-relative'>\n      <div [ngClass]=\"{inOpacity: isHidden}\">\n              <div class='tree-title d-inline-flex' (drop)=\"onDrop($event, _item)\"\n               (dragover)=\"allowDrop($event)\" *ngIf=\"!isEdit;else onEdit\">\n                      {{_item.name}}\n                      <div class='d-flex' *ngIf=\"_config.showItemActionBtns\">\n                      <button class='btn-add-small' *ngIf=\"_config.showAddItemButton\"\n                       (click)='submitAdd(null, type)'><span></span><span></span></button>\n                      <button class='btn-edit-small' *ngIf=\"_config.showRenameButton\"\n                       (click)='isEdit = true;'><span>&#x270E;</span></button>\n                      <button class='btn-remove-small' *ngIf=\"_config.showDeleteButton\"\n                       (click)='onSubmitDelete()'><span></span><span></span></button>\n                      </div>\n                  </div>\n                  <ng-template #onEdit>\n                      <div class='tree-title d-inline-flex'>\n                          <form [formGroup]=\"renameForm\">\n                              <input type=\"text\" class='input-rename' [ngModel]=\"_item.name\" formControlName=\"name\">\n                          </form>\n                          <div class='d-flex'>\n                              <button class='btn-accept-edit-small' (click)='submitRename(_item)'><span></span><span></span></button>\n                              <button class='btn-remove-small' (click)='onSubmitDelete()'><span></span><span></span></button>\n                              <div class='error-edit-wrap' *ngIf=\"showError\">\n                                  {{_config.setErrorValidationText}}\n                              </div>\n                          </div>\n                      </div>\n                  </ng-template>\n                  <div class=\"tree-content\" *ngIf=\"_item.childrens && !isHidden\"> \n                      <ngx-tree-children *ngFor=\"let item of _item.childrens\" [item]=\"item\"></ngx-tree-children>\n                  </div>\n      </div>\n      <div class='show-hide-switch' *ngIf=\"_config.enableShowHideBtns\">\n          <div *ngIf=\"isHidden; else visible\">\n              <button class='btn-show-small' (click)='isHidden = false'><span></span><span></span></button>\n          </div>\n          <ng-template #visible>\n              <button class='btn-hide-small' (click)='isHidden = true'><span></span></button>\n          </ng-template>\n      </div>\n  </div>\n</div>\n\n  "
+                    template: "\n  <div class='tree-child' *ngIf=\"_item && _config\"  [draggable]=\"this.isDragable\" (dragstart)=\"onDragStart($event, _item)\" (dragend)=\"onDragEnd($event, _item)\">\n  <div class='pos-relative'>\n      <div>\n              <div class='tree-title d-inline-flex' (drop)=\"onDrop($event, _item)\" (dragover)=\"allowDrop($event)\" *ngIf=\"!isEdit;else onEdit\">\n                      <div *ngIf=\"!_config.setTreeItemAsLinks; else link\">\n                          {{_item.name}}\n                      </div>\n                      <ng-template #link>\n                          <div>\n                             <a [href]=\"_item.options.href\">{{_item.name}}</a>\n                          </div>\n                      </ng-template>\n                      <div class='d-flex' *ngIf=\"_config.showItemActionBtns\">\n                      <button class='btn-add-small' *ngIf=\"_config.showAddItemButton\" (click)='submitAdd(null, type)'><span></span><span></span></button>\n                      <button class='btn-edit-small' *ngIf=\"_config.showRenameButton\" (click)='isEdit = true;'><span>&#x270E;</span></button>\n                      <button class='btn-remove-small' *ngIf=\"_config.showDeleteButton\" (click)='onSubmitDelete()'><span></span><span></span></button>\n                      </div>\n                  </div>\n                  <ng-template #onEdit>\n                      <div class='tree-title d-inline-flex'>\n                          <form [formGroup]=\"renameForm\">\n                              <input type=\"text\" class='input-rename' [ngModel]=\"_item.name\" formControlName=\"name\">\n                          </form>\n                          <div class='d-flex'>\n                              <button class='btn-accept-edit-small' (click)='submitRename(_item)'><span></span><span></span></button>\n                              <button class='btn-remove-small' (click)='onSubmitDelete()'><span></span><span></span></button>\n                              <div class='error-edit-wrap' *ngIf=\"showError\">\n                                  {{_config.setErrorValidationText}}\n                              </div>\n                          </div>\n                      </div>\n                  </ng-template>\n                  <div class=\"tree-content\" *ngIf=\"_item.childrens && !isHidden\">\n                      <ngx-tree-children *ngFor=\"let item of _item.childrens\" [item]=\"item\"></ngx-tree-children>\n                  </div>\n      </div>\n      <div class='show-hide-switch' *ngIf=\"_config.enableShowHideBtns && _item.childrens.length > 0\">\n          <div *ngIf=\"isHidden; else visible\">\n              <button class='btn-show-small' (click)='isHidden = false'><span></span><span></span></button>\n          </div>\n          <ng-template #visible>\n              <button class='btn-hide-small' (click)='isHidden = true'><span></span></button>\n          </ng-template>\n      </div>\n      <div class='invisible-layer' [ngClass]= \"{blockThis : _item.options.currentlyDragging}\">\n      </div>\n  </div>\n</div>\n\n  "
                 },] },
     ];
     /** @nocollapse */
@@ -428,11 +502,13 @@ var NgxTreeComponent = (function () {
             enableDragging: true,
             setRootTitle: 'Root',
             setErrorValidationText: 'Enter valid name',
-            setMinValidationCountChars: 1
+            setMinValidationCountChars: 1,
+            setTreeItemAsLinks: false
         };
         this.ondragstart = new core.EventEmitter();
         this.ondrop = new core.EventEmitter();
         this.onallowdrop = new core.EventEmitter();
+        this.ondragend = new core.EventEmitter();
         this.onadditem = new core.EventEmitter();
         this.onrenameitem = new core.EventEmitter();
         this.onremoveitem = new core.EventEmitter();
@@ -506,6 +582,9 @@ var NgxTreeComponent = (function () {
         this.treeService.onAllowDrop.subscribe(function (event) {
             _this.onallowdrop.emit(event);
         });
+        this.treeService.onDragEnd.subscribe(function (event) {
+            _this.ondragend.emit(event);
+        });
         this.treeService.onAddItem.subscribe(function (event) {
             _this.onadditem.emit(event);
         });
@@ -528,7 +607,6 @@ var NgxTreeComponent = (function () {
         var _this = this;
         this.treeService.getLocalData(userTree).subscribe(function (tree) {
             _this.treeView = tree;
-            console.log(_this.treeView);
         }, function (error) {
             console.log(error);
         });
@@ -611,6 +689,7 @@ var NgxTreeComponent = (function () {
         "ondragstart": [{ type: core.Output },],
         "ondrop": [{ type: core.Output },],
         "onallowdrop": [{ type: core.Output },],
+        "ondragend": [{ type: core.Output },],
         "onadditem": [{ type: core.Output },],
         "onrenameitem": [{ type: core.Output },],
         "onremoveitem": [{ type: core.Output },],

@@ -42,12 +42,14 @@ export class NgxTreeComponent implements OnInit {
       enableDragging: true,
       setRootTitle: 'Root',
       setErrorValidationText: 'Enter valid name',
-      setMinValidationCountChars: 1
+      setMinValidationCountChars: 1,
+      setTreeItemAsLinks: false
     };
   @ViewChild(NgxTreeChildrenComponent) child: NgxTreeChildrenComponent;
   @Output() ondragstart: EventEmitter<any> = new EventEmitter();
   @Output() ondrop: EventEmitter<any> = new EventEmitter();
   @Output() onallowdrop: EventEmitter<any> = new EventEmitter();
+  @Output() ondragend: EventEmitter<any> = new EventEmitter();
   @Output() onadditem: EventEmitter<any> = new EventEmitter();
   @Output() onrenameitem: EventEmitter<any> = new EventEmitter();
   @Output() onremoveitem: EventEmitter<any> = new EventEmitter();
@@ -88,6 +90,11 @@ export class NgxTreeComponent implements OnInit {
         this.onallowdrop.emit(event);
       }
     );
+    this.treeService.onDragEnd.subscribe(
+      (event) => {
+        this.ondragend.emit(event);
+      }
+    );
     this.treeService.onAddItem.subscribe(
       (event) => {
         this.onadditem.emit(event);
@@ -109,7 +116,6 @@ export class NgxTreeComponent implements OnInit {
     this.treeService.getLocalData(userTree).subscribe(
       (tree: TreeModel) => {
         this.treeView = tree;
-        console.log(this.treeView);
       }, (error) => {
         console.log(error);
       }

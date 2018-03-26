@@ -90,14 +90,19 @@ The interface accepts only the following structure:
 
 ```typescript
  export interface TreeModel {
-    name: string;
-    id: number;
-    options?: {};
-    childrens: TreeModel[];
+    name: string; // name of item
+    id: number; // id of item
+    options?: TreeItemOptions; // options of item
+    childrens: TreeModel[]; // childrens list
+}
+export interface TreeItemOptions {
+    href?: string; // href for <a> tag if enable setTreeItemAsLinks on config
+    isHidden?: boolean; // hide childrens
+    currentlyDragging?: boolean; // enable only where element is drugging.
 }
 ```
 
-#### Example 
+#### example 
 
 in you template file:
 
@@ -142,6 +147,23 @@ in you component file:
 
 ```typescript
     onDragStart(event) {
+    console.log(event);
+  }
+```
+
+### ondragend()
+Trigger end of drag event 
+#### example 
+
+in you template file:
+
+```xml
+<ngx-tree-component [treeData]='youTree' (ondragend)='onDragEnd($event)'> </ngx-tree-component>
+```
+in you component file:
+
+```typescript
+    onDragEnd(event) {
     console.log(event);
   }
 ```
@@ -260,6 +282,7 @@ in you component file:
       showDeleteButton: true, // enable / disable delete item button.
       setErrorValidationText: "I can be change", // set error validate text.
       setMinValidationCountChars: 3 // Set count of name min chars on tree.
+      setTreeItemAsLinks: true // set name of items as <a> and set link from item.options.href .
     }
 ```
 

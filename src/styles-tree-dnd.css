@@ -3,12 +3,15 @@
  This project is licensed under the terms of the MIT license.
  https://github.com/Zicrael/ngx-tree-dnd
  */
- .tree-title {
+
+.tree-child {
+    user-select: none;
+}
+.tree-title {
     position: relative;
     padding-left: 11px;
     align-items: center;
     margin-bottom: 5px;
-    user-select: none;
 }
 .d-flex {
     display: flex;
@@ -31,7 +34,6 @@
     align-items: center;
     content: '';
 }
-
 .btn-add-small, .btn-remove-small, .btn-edit-small, .btn-accept-edit-small, .btn-hide-small, .btn-show-small {
     display: flex;
     position: relative;
@@ -47,7 +49,6 @@
     cursor: pointer;
     padding: 0;
 }
-
 .btn-hide-small, .btn-show-small {
     background-color: #DCDCDC;
     outline-color: #DCDCDC;
@@ -147,6 +148,12 @@
 .pos-relative {
     position: relative;
 }
-.inOpacity {
-    opacity: 0;
+.blockThis {
+    display: flex;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255,255,255,0.5);
 }

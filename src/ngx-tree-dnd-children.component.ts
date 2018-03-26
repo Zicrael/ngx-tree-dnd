@@ -5,24 +5,27 @@
  */
 import { Component, OnInit, Input, ViewChild, Output } from '@angular/core';
 import { NgxTreeService } from './ngx-tree-dnd.service';
-import { TreeModel, TreeConfig } from './tree-view.model';
+import { TreeModel, TreeConfig, TreeItemOptions } from './tree-view.model';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 @Component({
   selector: 'ngx-tree-children',
   template: `
-  <div class='tree-child' *ngIf="_item && _config"  [draggable]="_config.enableDragging" (dragstart)="onDragStart($event, _item)" >
+  <div class='tree-child' *ngIf="_item && _config"  [draggable]="this.isDragable" (dragstart)="onDragStart($event, _item)" (dragend)="onDragEnd($event, _item)">
   <div class='pos-relative'>
-      <div [ngClass]="{inOpacity: isHidden}">
-              <div class='tree-title d-inline-flex' (drop)="onDrop($event, _item)"
-               (dragover)="allowDrop($event)" *ngIf="!isEdit;else onEdit">
-                      {{_item.name}}
+      <div>
+              <div class='tree-title d-inline-flex' (drop)="onDrop($event, _item)" (dragover)="allowDrop($event)" *ngIf="!isEdit;else onEdit">
+                      <div *ngIf="!_config.setTreeItemAsLinks; else link">
+                          {{_item.name}}
+                      </div>
+                      <ng-template #link>
+                          <div>
+                             <a [href]="_item.options.href">{{_item.name}}</a>
+                          </div>
+                      </ng-template>
                       <div class='d-flex' *ngIf="_config.showItemActionBtns">
-                      <button class='btn-add-small' *ngIf="_config.showAddItemButton"
-                       (click)='submitAdd(null, type)'><span></span><span></span></button>
-                      <button class='btn-edit-small' *ngIf="_config.showRenameButton"
-                       (click)='isEdit = true;'><span>&#x270E;</span></button>
-                      <button class='btn-remove-small' *ngIf="_config.showDeleteButton"
-                       (click)='onSubmitDelete()'><span></span><span></span></button>
+                      <button class='btn-add-small' *ngIf="_config.showAddItemButton" (click)='submitAdd(null, type)'><span></span><span></span></button>
+                      <button class='btn-edit-small' *ngIf="_config.showRenameButton" (click)='isEdit = true;'><span>&#x270E;</span></button>
+                      <button class='btn-remove-small' *ngIf="_config.showDeleteButton" (click)='onSubmitDelete()'><span></span><span></span></button>
                       </div>
                   </div>
                   <ng-template #onEdit>
@@ -39,17 +42,19 @@ import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms'
                           </div>
                       </div>
                   </ng-template>
-                  <div class="tree-content" *ngIf="_item.childrens && !isHidden"> 
+                  <div class="tree-content" *ngIf="_item.childrens && !isHidden">
                       <ngx-tree-children *ngFor="let item of _item.childrens" [item]="item"></ngx-tree-children>
                   </div>
       </div>
-      <div class='show-hide-switch' *ngIf="_config.enableShowHideBtns">
+      <div class='show-hide-switch' *ngIf="_config.enableShowHideBtns && _item.childrens.length > 0">
           <div *ngIf="isHidden; else visible">
               <button class='btn-show-small' (click)='isHidden = false'><span></span><span></span></button>
           </div>
           <ng-template #visible>
               <button class='btn-hide-small' (click)='isHidden = true'><span></span></button>
           </ng-template>
+      </div>
+      <div class='invisible-layer' [ngClass]= "{blockThis : _item.options.currentlyDragging}">
       </div>
   </div>
 </div>
@@ -65,22 +70,42 @@ export class NgxTreeChildrenComponent implements OnInit {
   isDragable: boolean;
   renameForm: FormGroup;
   _config: TreeConfig;
+  itemOptions: TreeItemOptions;
   @Input()
   set item(item: TreeModel) {
+    this.itemOptions = {
+      href: '#',
+      isHidden: false,
+      currentlyDragging: false
+    };
+    if (item.options) {
+      this.setOptions(item.options);
+      item.options = this.itemOptions;
+    } else {
+      item.options = this.itemOptions;
+    }
     this._item = item;
+    this.isHidden = this._item.options.isHidden;
     this.checkFloatItem();
   }
   constructor(private treeService: NgxTreeService, private fb: FormBuilder) {
     this.type = 'children';
-    this.isHidden = false;
     this.treeService._config.subscribe(
       (config) => {
         this._config = config;
+        this.isDragable = this._config.enableDragging;
         this.createForm();
       }
     );
    }
-
+  setOptions(options) {
+    for (const key of Object.keys(options)) {
+      this.setValue(key, options);
+    }
+  }
+  setValue(item, options) {
+    this.itemOptions[item] = options[item];
+  }
   checkFloatItem() {
     if (this._item.name === null) {
       this.isEdit = true;
@@ -105,6 +130,7 @@ export class NgxTreeChildrenComponent implements OnInit {
       target: item
     };
     event.stopPropagation();
+    this.treeService.startDragging();
     this.treeService.onDragStart.next(eventObj);
     // const allowed = document.getElementsByClassName('tree-title');
     // const  arr = Array.prototype.slice.call( allowed );
@@ -112,6 +138,15 @@ export class NgxTreeChildrenComponent implements OnInit {
     // for (const i of arr) {
     //   i.style.border = '1px dashed grey';
     // }
+  }
+  onDragEnd(event, item) {
+    const dragItem = this.treeService.isDragging;
+    this.treeService.dragEndAction(dragItem);
+    const eventObj = {
+      event,
+      target: item
+    };
+    this.treeService.onDragEnd.next(eventObj);
   }
   onDrop(event, item) {
     const dragItem = this.treeService.isDragging;
@@ -137,7 +172,6 @@ export class NgxTreeChildrenComponent implements OnInit {
       this.showError = false;
       this.treeService.renameItem(this.renameForm.value.name, item.id);
       this.isEdit = false;
-      console.log();
     } else {
       this.showError = true;
     }

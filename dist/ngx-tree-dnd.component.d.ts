@@ -13,6 +13,7 @@ export declare class NgxTreeComponent implements OnInit {
     ondragstart: EventEmitter<any>;
     ondrop: EventEmitter<any>;
     onallowdrop: EventEmitter<any>;
+    ondragend: EventEmitter<any>;
     onadditem: EventEmitter<any>;
     onrenameitem: EventEmitter<any>;
     onremoveitem: EventEmitter<any>;
