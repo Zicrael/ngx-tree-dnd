@@ -78,6 +78,11 @@ You must import default styles for tree ( you can change them by rewrite classes
     }
   ],
 ```
+
+## Demo
+
+[Run on stackblitz.com](https://stackblitz.com/edit/angular-1mdkvt)
+
 ## NGX-TREE-DND API
 
 With the development of the plug-in API will be replenished. So do not forget update the packadge.
@@ -307,7 +312,7 @@ in you component file:
         childrens: []
       },
       {
-        name: 'first child elem',
+        name: 'second elem',
         id: 0987654321,
         options: {
           href: 'www.apple.com', // set href to <a> title if config.setTreeItemAsLinks = true, you can style it by .tree-link class.

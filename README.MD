@@ -78,6 +78,11 @@ You must import default styles for tree ( you can change them by rewrite classes
     }
   ],
 ```
+
+## Demo
+
+[Run on stackblitz.com](https://stackblitz.com/edit/angular-1mdkvt)
+
 ## NGX-TREE-DND API
 
 With the development of the plug-in API will be replenished. So do not forget update the packadge.
