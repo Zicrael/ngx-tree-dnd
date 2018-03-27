@@ -16,6 +16,7 @@ export declare class NgxTreeChildrenComponent implements OnInit {
     itemOptions: TreeItemOptions;
     item: TreeModel;
     constructor(treeService: NgxTreeService, fb: FormBuilder);
+    enableSubscribers(): void;
     setOptions(options: any): void;
     setValue(item: any, options: any): void;
     checkFloatItem(): void;

@@ -55,8 +55,15 @@ export class NgxTreeComponent implements OnInit {
   @Output() onremoveitem: EventEmitter<any> = new EventEmitter();
   @Input()
   set config(config: TreeConfig) {
-    this.setConfig(config);
-  }
+    Object.seal(this._config);
+    try {
+      this.setConfig(config);
+      this.treeService._config.next(this._config);
+    } catch (error) {
+      console.log('Config is invalid! Default configuragion will be appeared');
+      this.treeService._config.next(this.treeService.defaulConfig);
+    }
+}
   @Input()
   set treeData(item: TreeModel[]) {
     this.getTreeData(item);
@@ -69,7 +76,6 @@ export class NgxTreeComponent implements OnInit {
     for (const key of Object.keys(config)) {
       this.setValue(key, config);
     }
-     this.treeService._config.next(this._config);
   }
   setValue(item, config) {
     this._config[item] = config[item];

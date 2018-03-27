@@ -8,14 +8,13 @@ import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/operator/map';
-import { TreeModel } from './tree-view.model';
+import { TreeModel, TreeConfig } from './tree-view.model';
 @Injectable()
 export class NgxTreeService {
   treeStorage: TreeModel[] = [];
   listOfSelectedElement: TreeModel[];
   selectedElement: TreeModel;
   isDragging: TreeModel;
-  globalPositionCounter: number;
   onDragStart = new Subject<any>();
   onDrop = new Subject<any>();
   onAllowDrop = new Subject<any>();
@@ -24,8 +23,21 @@ export class NgxTreeService {
   onRenameItem = new Subject<any>();
   onRemoveItem = new Subject<any>();
   _config = new BehaviorSubject<any>(null);
+  defaulConfig: TreeConfig;
   constructor() {
-    this.globalPositionCounter = 0;
+    this.defaulConfig = {
+      showAddRootBtn: true,
+      showItemActionBtns: true,
+      showAddItemButton: true,
+      showRenameButton: true,
+      showDeleteButton: true,
+      enableShowHideBtns: true,
+      enableDragging: true,
+      setRootTitle: 'Root',
+      setErrorValidationText: 'Enter valid name',
+      setMinValidationCountChars: 1,
+      setTreeItemAsLinks: false
+    };
   }
   getLocalData(item) {
     const data = new Observable(observer => {

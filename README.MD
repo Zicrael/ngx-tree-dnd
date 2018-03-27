@@ -257,7 +257,7 @@ in you component file:
   }
 ```
 
-### 3.Config
+### 3. Config
 
 You can enable/disable and set some elements on tree by write simple config: 
 
@@ -281,34 +281,70 @@ in you component file:
       showRenameButton: true, // enable / disable rename item button.
       showDeleteButton: true, // enable / disable delete item button.
       setErrorValidationText: "I can be change", // set error validate text.
-      setMinValidationCountChars: 3 // Set count of name min chars on tree.
+      setMinValidationCountChars: 3, // Set count of name min chars on tree.
       setTreeItemAsLinks: true // set name of items as <a> and set link from item.options.href .
     }
 ```
 
-### 4.Styles
+### 4. Items options
+
+You can change items options by set 'options' key on item object : 
+
+#### example 
+
+in you component file:
+
+```typescript
+    youTree = [
+      {
+        name: 'first elem',
+        id: 1234567890,
+        options: {
+          href: 'www.google.com', // set href to <a> title if config.setTreeItemAsLinks = true, you can style it by .tree-link class.
+          isHidden: true, // hide childrens list element as default, but you can open it if config.enableShowHideBtns = true
+          position: 1 // no effect. It will be used on feature versions.
+        }
+        childrens: []
+      },
+      {
+        name: 'second elem',
+        id: 0987654321,
+        options: {
+          href: 'www.apple.com', // set href to <a> title if config.setTreeItemAsLinks = true, you can style it by .tree-link class.
+          isHidden: false, // hide childrens list element as default, but you can open it if config.enableShowHideBtns = true
+          position: 2 // no effect. It will be used on feature versions. (But you can use it).
+        }
+        childrens: []
+      }
+    ];
+```
+
+### 5. Styles
 
   You can rewrite all styles like you want. Here some for example:
 
 ```css
   .tree-child {
-      /* you styles */
+    /* change styles for child elements */
   }
   .tree-title {
-      /* you styles */
+    /* change styles for items title */
   }
   .tree-content {
-    /* you styles */
+    /* change styles for tree.childrens wrapper */
+  }
+  .tree-link {
+    /* change styles for links if  config.setTreeItemAsLinks = true  */
   }
   .btn-add-small, .btn-remove-small, .btn-edit-small, .btn-accept-edit-small {
-    /* you styles */
+    /* change styles for buttons if  config.showItemActionBtns = true  */
   }
   .input-rename {
-    /* you styles */
+    /* change styles for input name/rename  */
   }
 ```
 
-### 5. Thank you for use my plug-in. 
+### Thank you for use my plug-in. 
 
 Made with love by Yaroslav Kikot.
 

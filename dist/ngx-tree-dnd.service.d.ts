@@ -2,13 +2,12 @@ import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/operator/map';
-import { TreeModel } from './tree-view.model';
+import { TreeModel, TreeConfig } from './tree-view.model';
 export declare class NgxTreeService {
     treeStorage: TreeModel[];
     listOfSelectedElement: TreeModel[];
     selectedElement: TreeModel;
     isDragging: TreeModel;
-    globalPositionCounter: number;
     onDragStart: Subject<any>;
     onDrop: Subject<any>;
     onAllowDrop: Subject<any>;
@@ -17,6 +16,7 @@ export declare class NgxTreeService {
     onRenameItem: Subject<any>;
     onRemoveItem: Subject<any>;
     _config: BehaviorSubject<any>;
+    defaulConfig: TreeConfig;
     constructor();
     getLocalData(item: any): Observable<{}>;
     elementFinder(list: any, id: any): void;

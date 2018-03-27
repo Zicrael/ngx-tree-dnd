@@ -19,7 +19,7 @@ import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms'
                       </div>
                       <ng-template #link>
                           <div>
-                             <a [href]="_item.options.href">{{_item.name}}</a>
+                             <a [href]="_item.options.href" class='tree-link'>{{_item.name}}</a>
                           </div>
                       </ng-template>
                       <div class='d-flex' *ngIf="_config.showItemActionBtns">
@@ -90,14 +90,23 @@ export class NgxTreeChildrenComponent implements OnInit {
   }
   constructor(private treeService: NgxTreeService, private fb: FormBuilder) {
     this.type = 'children';
+    this.enableSubscribers();
+   }
+   enableSubscribers() {
     this.treeService._config.subscribe(
       (config) => {
-        this._config = config;
-        this.isDragable = this._config.enableDragging;
-        this.createForm();
+        if ( config !== null ) {
+          this._config = config;
+          this.isDragable = this._config.enableDragging;
+          this.createForm();
+        } else {
+          this._config = this.treeService.defaulConfig;
+          this.isDragable = this._config.enableDragging;
+          this.createForm();
+        }
       }
     );
-   }
+  }
   setOptions(options) {
     for (const key of Object.keys(options)) {
       this.setValue(key, options);
@@ -117,7 +126,7 @@ export class NgxTreeChildrenComponent implements OnInit {
     this.renameForm = this.fb.group({
       name: ['' , [
         Validators.required,
-        Validators.minLength(1)
+        Validators.minLength( this._config.setMinValidationCountChars )
       ]],
     });
   }

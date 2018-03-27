@@ -21,7 +21,19 @@ var NgxTreeService = (function () {
         this.onRenameItem = new Subject$1();
         this.onRemoveItem = new Subject$1();
         this._config = new BehaviorSubject$1(null);
-        this.globalPositionCounter = 0;
+        this.defaulConfig = {
+            showAddRootBtn: true,
+            showItemActionBtns: true,
+            showAddItemButton: true,
+            showRenameButton: true,
+            showDeleteButton: true,
+            enableShowHideBtns: true,
+            enableDragging: true,
+            setRootTitle: 'Root',
+            setErrorValidationText: 'Enter valid name',
+            setMinValidationCountChars: 1,
+            setTreeItemAsLinks: false
+        };
     }
     /**
      * @param {?} item
@@ -241,15 +253,10 @@ var NgxTreeService = (function () {
  */
 var NgxTreeChildrenComponent = (function () {
     function NgxTreeChildrenComponent(treeService, fb) {
-        var _this = this;
         this.treeService = treeService;
         this.fb = fb;
         this.type = 'children';
-        this.treeService._config.subscribe(function (config) {
-            _this._config = config;
-            _this.isDragable = _this._config.enableDragging;
-            _this.createForm();
-        });
+        this.enableSubscribers();
     }
     Object.defineProperty(NgxTreeChildrenComponent.prototype, "item", {
         set: /**
@@ -276,6 +283,27 @@ var NgxTreeChildrenComponent = (function () {
         enumerable: true,
         configurable: true
     });
+    /**
+     * @return {?}
+     */
+    NgxTreeChildrenComponent.prototype.enableSubscribers = /**
+     * @return {?}
+     */
+    function () {
+        var _this = this;
+        this.treeService._config.subscribe(function (config) {
+            if (config !== null) {
+                _this._config = config;
+                _this.isDragable = _this._config.enableDragging;
+                _this.createForm();
+            }
+            else {
+                _this._config = _this.treeService.defaulConfig;
+                _this.isDragable = _this._config.enableDragging;
+                _this.createForm();
+            }
+        });
+    };
     /**
      * @param {?} options
      * @return {?}
@@ -327,7 +355,7 @@ var NgxTreeChildrenComponent = (function () {
         this.renameForm = this.fb.group({
             name: ['', [
                     Validators.required,
-                    Validators.minLength(1)
+                    Validators.minLength(this._config.setMinValidationCountChars)
                 ]],
         });
     };
@@ -472,7 +500,7 @@ var NgxTreeChildrenComponent = (function () {
     NgxTreeChildrenComponent.decorators = [
         { type: Component, args: [{
                     selector: 'ngx-tree-children',
-                    template: "\n  <div class='tree-child' *ngIf=\"_item && _config\"  [draggable]=\"this.isDragable\" (dragstart)=\"onDragStart($event, _item)\" (dragend)=\"onDragEnd($event, _item)\">\n  <div class='pos-relative'>\n      <div>\n              <div class='tree-title d-inline-flex' (drop)=\"onDrop($event, _item)\" (dragover)=\"allowDrop($event)\" *ngIf=\"!isEdit;else onEdit\">\n                      <div *ngIf=\"!_config.setTreeItemAsLinks; else link\">\n                          {{_item.name}}\n                      </div>\n                      <ng-template #link>\n                          <div>\n                             <a [href]=\"_item.options.href\">{{_item.name}}</a>\n                          </div>\n                      </ng-template>\n                      <div class='d-flex' *ngIf=\"_config.showItemActionBtns\">\n                      <button class='btn-add-small' *ngIf=\"_config.showAddItemButton\" (click)='submitAdd(null, type)'><span></span><span></span></button>\n                      <button class='btn-edit-small' *ngIf=\"_config.showRenameButton\" (click)='isEdit = true;'><span>&#x270E;</span></button>\n                      <button class='btn-remove-small' *ngIf=\"_config.showDeleteButton\" (click)='onSubmitDelete()'><span></span><span></span></button>\n                      </div>\n                  </div>\n                  <ng-template #onEdit>\n                      <div class='tree-title d-inline-flex'>\n                          <form [formGroup]=\"renameForm\">\n                              <input type=\"text\" class='input-rename' [ngModel]=\"_item.name\" formControlName=\"name\">\n                          </form>\n                          <div class='d-flex'>\n                              <button class='btn-accept-edit-small' (click)='submitRename(_item)'><span></span><span></span></button>\n                              <button class='btn-remove-small' (click)='onSubmitDelete()'><span></span><span></span></button>\n                              <div class='error-edit-wrap' *ngIf=\"showError\">\n                                  {{_config.setErrorValidationText}}\n                              </div>\n                          </div>\n                      </div>\n                  </ng-template>\n                  <div class=\"tree-content\" *ngIf=\"_item.childrens && !isHidden\">\n                      <ngx-tree-children *ngFor=\"let item of _item.childrens\" [item]=\"item\"></ngx-tree-children>\n                  </div>\n      </div>\n      <div class='show-hide-switch' *ngIf=\"_config.enableShowHideBtns && _item.childrens.length > 0\">\n          <div *ngIf=\"isHidden; else visible\">\n              <button class='btn-show-small' (click)='isHidden = false'><span></span><span></span></button>\n          </div>\n          <ng-template #visible>\n              <button class='btn-hide-small' (click)='isHidden = true'><span></span></button>\n          </ng-template>\n      </div>\n      <div class='invisible-layer' [ngClass]= \"{blockThis : _item.options.currentlyDragging}\">\n      </div>\n  </div>\n</div>\n\n  "
+                    template: "\n  <div class='tree-child' *ngIf=\"_item && _config\"  [draggable]=\"this.isDragable\" (dragstart)=\"onDragStart($event, _item)\" (dragend)=\"onDragEnd($event, _item)\">\n  <div class='pos-relative'>\n      <div>\n              <div class='tree-title d-inline-flex' (drop)=\"onDrop($event, _item)\" (dragover)=\"allowDrop($event)\" *ngIf=\"!isEdit;else onEdit\">\n                      <div *ngIf=\"!_config.setTreeItemAsLinks; else link\">\n                          {{_item.name}}\n                      </div>\n                      <ng-template #link>\n                          <div>\n                             <a [href]=\"_item.options.href\" class='tree-link'>{{_item.name}}</a>\n                          </div>\n                      </ng-template>\n                      <div class='d-flex' *ngIf=\"_config.showItemActionBtns\">\n                      <button class='btn-add-small' *ngIf=\"_config.showAddItemButton\" (click)='submitAdd(null, type)'><span></span><span></span></button>\n                      <button class='btn-edit-small' *ngIf=\"_config.showRenameButton\" (click)='isEdit = true;'><span>&#x270E;</span></button>\n                      <button class='btn-remove-small' *ngIf=\"_config.showDeleteButton\" (click)='onSubmitDelete()'><span></span><span></span></button>\n                      </div>\n                  </div>\n                  <ng-template #onEdit>\n                      <div class='tree-title d-inline-flex'>\n                          <form [formGroup]=\"renameForm\">\n                              <input type=\"text\" class='input-rename' [ngModel]=\"_item.name\" formControlName=\"name\">\n                          </form>\n                          <div class='d-flex'>\n                              <button class='btn-accept-edit-small' (click)='submitRename(_item)'><span></span><span></span></button>\n                              <button class='btn-remove-small' (click)='onSubmitDelete()'><span></span><span></span></button>\n                              <div class='error-edit-wrap' *ngIf=\"showError\">\n                                  {{_config.setErrorValidationText}}\n                              </div>\n                          </div>\n                      </div>\n                  </ng-template>\n                  <div class=\"tree-content\" *ngIf=\"_item.childrens && !isHidden\">\n                      <ngx-tree-children *ngFor=\"let item of _item.childrens\" [item]=\"item\"></ngx-tree-children>\n                  </div>\n      </div>\n      <div class='show-hide-switch' *ngIf=\"_config.enableShowHideBtns && _item.childrens.length > 0\">\n          <div *ngIf=\"isHidden; else visible\">\n              <button class='btn-show-small' (click)='isHidden = false'><span></span><span></span></button>\n          </div>\n          <ng-template #visible>\n              <button class='btn-hide-small' (click)='isHidden = true'><span></span></button>\n          </ng-template>\n      </div>\n      <div class='invisible-layer' [ngClass]= \"{blockThis : _item.options.currentlyDragging}\">\n      </div>\n  </div>\n</div>\n\n  "
                 },] },
     ];
     /** @nocollapse */
@@ -523,7 +551,15 @@ var NgxTreeComponent = (function () {
          * @return {?}
          */
         function (config) {
-            this.setConfig(config);
+            Object.seal(this._config);
+            try {
+                this.setConfig(config);
+                this.treeService._config.next(this._config);
+            }
+            catch (/** @type {?} */ error) {
+                console.log('Config is invalid! Default configuragion will be appeared');
+                this.treeService._config.next(this.treeService.defaulConfig);
+            }
         },
         enumerable: true,
         configurable: true
@@ -552,7 +588,6 @@ var NgxTreeComponent = (function () {
             var key = _a[_i];
             this.setValue(key, config);
         }
-        this.treeService._config.next(this._config);
     };
     /**
      * @param {?} item
