@@ -1,4 +1,4 @@
-# ngx-tree-dnd  [![npm version](https://badge.fury.io/js/ngx-tree-dnd.svg)](https://badge.fury.io/js/ngx-tree-dnd) [![npm monthly downloads](https://img.shields.io/npm/dm/ngx-tree-dnd.svg?style=flat-square)](https://www.npmjs.com/package/ngx-tree-dnd) [![Dependency Status](https://david-dm.org/zicrael/ngx-tree-dnd.svg)](https://david-dm.org/zicrael/ngx-tree-dnd) [![Build status](https://api.travis-ci.org/Zicrael/ngx-tree-dnd.svg?branch=master)](https://travis-ci.org/Zicrael/ngx-tree-dnd) 
+# ngx-tree-dnd  [![npm version](https://badge.fury.io/js/ngx-tree-dnd.svg)](https://badge.fury.io/js/ngx-tree-dnd) [![npm monthly downloads](https://img.shields.io/npm/dt/ngx-tree-dnd.svg)](https://www.npmjs.com/package/ngx-tree-dnd) [![Dependency Status](https://david-dm.org/zicrael/ngx-tree-dnd.svg)](https://david-dm.org/zicrael/ngx-tree-dnd) [![Build status](https://api.travis-ci.org/Zicrael/ngx-tree-dnd.svg?branch=master)](https://travis-ci.org/Zicrael/ngx-tree-dnd) 
 
 
 Angular 5 support tree with drag-and-drop, no dependencies, AoT compilation. Its simple and fast.
