@@ -81,7 +81,13 @@ You must import default styles for tree ( you can change them by rewrite classes
 
 ## Demo
 
-[Run on stackblitz.com](https://stackblitz.com/edit/angular-1mdkvt)
+Demo with editor: 
+
+[Run on stackblitz.com](https://stackblitz.com/edit/ngx-tree-dnd)
+
+Demo application: 
+
+[Run on stackblitz.com](https://ngx-tree-dnd.stackblitz.io)
 
 ## NGX-TREE-DND API
 
