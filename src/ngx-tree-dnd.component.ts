@@ -11,7 +11,6 @@ import { TreeModel, TreeConfig } from './tree-view.model';
 
 @Component({
   selector: 'ngx-tree-component',
-  styleUrls: ['./stypes-tree-dnd.scss'],
   template: `
   <div id='three-wrapper' *ngIf="treeView">
   <div class='root-title' (drop)="onDrop($event, treeView)" (dragover)="allowDrop($event)">
