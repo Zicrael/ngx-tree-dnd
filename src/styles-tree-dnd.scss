@@ -4,6 +4,7 @@
  https://github.com/Zicrael/ngx-tree-dnd
  */
 
+/* Tree main styles */
 .tree-child {
     user-select: none;
 }
@@ -12,12 +13,6 @@
     padding-left: 11px;
     align-items: center;
     margin-bottom: 5px;
-}
-.d-flex {
-    display: flex;
-}
-.d-inline-flex {
-    display: inline-flex;
 }
 .tree-content {
     margin-left: 10px;
@@ -34,6 +29,8 @@
     align-items: center;
     content: '';
 }
+
+/* Buttons styles */
 .btn-add-small, .btn-remove-small, .btn-edit-small, .btn-accept-edit-small, .btn-hide-small, .btn-show-small {
     display: flex;
     position: relative;
@@ -126,6 +123,8 @@
     margin-left: 1px;
     background-color: #fff;
 }
+
+/* childrens styles */
 .input-rename {
     height: 12px;
     padding-left: 5px;
@@ -142,12 +141,6 @@
     margin-left: 5px;
     color: #d33;
 }
-.text-center {
-    text-align: center;
-}
-.pos-relative {
-    position: relative;
-}
 .blockThis {
     display: flex;
     position: absolute;
@@ -156,4 +149,18 @@
     right: 0;
     bottom: 0;
     background: rgba(255,255,255,0.5);
+}
+
+/* tool classes styles */
+.d-flex {
+    display: flex;
+}
+.d-inline-flex {
+    display: inline-flex;
+}
+.text-center {
+    text-align: center;
+}
+.pos-relative {
+    position: relative;
 }

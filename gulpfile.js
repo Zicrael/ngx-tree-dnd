@@ -5,6 +5,7 @@ var gulp = require('gulp'),
   rollup = require('gulp-rollup'),
   rename = require('gulp-rename'),
   fs = require('fs-extra'),
+  sass = require('gulp-sass');
   runSequence = require('run-sequence'),
   inlineResources = require('./tools/gulp/inline-resources');
 
@@ -41,6 +42,15 @@ gulp.task('copy:source', function () {
 gulp.task('inline-resources', function () {
   return Promise.resolve()
     .then(() => inlineResources(tmpFolder));
+});
+
+/**
+ *    Build css file to dist folder.
+ */
+gulp.task('styles', function() {
+  gulp.src(`${srcFolder}/*.scss`)
+      .pipe(sass().on('error', sass.logError))
+      .pipe(gulp.dest('./dist/'));
 });
 
 
@@ -186,6 +196,7 @@ gulp.task('compile', function () {
     'clean:dist',
     'copy:source',
     'inline-resources',
+    'styles',
     'ngc',
     'rollup:fesm',
     'rollup:umd',

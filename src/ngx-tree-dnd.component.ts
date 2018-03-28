@@ -4,35 +4,35 @@
  https://github.com/Zicrael/ngx-tree-dnd
  */
 import { Component, OnInit, Input, ViewChild, Output, EventEmitter } from '@angular/core';
+import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
+
 import { NgxTreeService } from './ngx-tree-dnd.service';
 import { TreeModel, TreeConfig } from './tree-view.model';
-import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Options } from 'selenium-webdriver/safari';
-import { NgxTreeChildrenComponent } from './ngx-tree-dnd-children.component';
 
 @Component({
   selector: 'ngx-tree-component',
+  styleUrls: ['./stypes-tree-dnd.scss'],
   template: `
   <div id='three-wrapper' *ngIf="treeView">
-  <div class='root-title' (drop)="onDrop($event, treeView)" (dragover)="child.allowDrop($event)">
-  {{_config.setRootTitle}}
+  <div class='root-title' (drop)="onDrop($event, treeView)" (dragover)="allowDrop($event)">
+    {{userConfig.setRootTitle}}
   </div>
-<div class='tree-child'>
-   <div class="tree-content">
-       <ngx-tree-children *ngFor="let item of treeView" [item]="item"></ngx-tree-children>
-   </div>
-</div>
-<button class='btn-add-small' *ngIf="_config.showAddRootBtn" (click)='addRootItem()'>
- <span></span>
- <span></span>
-</button>
+  <div class='tree-child'>
+    <div class="tree-content">
+        <ngx-tree-children *ngFor="let item of treeView" [setItem]="item"></ngx-tree-children>
+    </div>
+  </div>
+  <button class='btn-add-small' *ngIf="userConfig.showAddRootBtn" (click)='addRootItem()'>
+  <span></span>
+  <span></span>
+  </button>
 </div>
   `
 })
 export class NgxTreeComponent implements OnInit {
   treeView: TreeModel;
   type: string;
-  _config: TreeConfig = {
+  userConfig: TreeConfig = {
       showAddRootBtn: true,
       showItemActionBtns: true,
       showAddItemButton: true,
@@ -45,7 +45,6 @@ export class NgxTreeComponent implements OnInit {
       setMinValidationCountChars: 1,
       setTreeItemAsLinks: false
     };
-  @ViewChild(NgxTreeChildrenComponent) child: NgxTreeChildrenComponent;
   @Output() ondragstart: EventEmitter<any> = new EventEmitter();
   @Output() ondrop: EventEmitter<any> = new EventEmitter();
   @Output() onallowdrop: EventEmitter<any> = new EventEmitter();
@@ -53,33 +52,46 @@ export class NgxTreeComponent implements OnInit {
   @Output() onadditem: EventEmitter<any> = new EventEmitter();
   @Output() onrenameitem: EventEmitter<any> = new EventEmitter();
   @Output() onremoveitem: EventEmitter<any> = new EventEmitter();
+
   @Input()
   set config(config: TreeConfig) {
-    Object.seal(this._config);
+    // seal config
+    Object.seal(this.userConfig);
     try {
+      // if config it`s pass
       this.setConfig(config);
-      this.treeService._config.next(this._config);
+      this.treeService.config.next(this.userConfig);
     } catch (error) {
+      // if config invalid
       console.log('Config is invalid! Default configuragion will be appeared');
-      this.treeService._config.next(this.treeService.defaulConfig);
+      this.treeService.config.next(this.treeService.defaulConfig);
     }
-}
+  }
+
   @Input()
   set treeData(item: TreeModel[]) {
-    this.getTreeData(item);
+    // get user tree data
+      this.getTreeData(item);
   }
+
   constructor(public treeService: NgxTreeService, private fb: FormBuilder) {
+    // set type root
     this.type = 'root';
     this.enableSubscribers();
   }
+
+  // set user config
   setConfig(config) {
     for (const key of Object.keys(config)) {
       this.setValue(key, config);
     }
   }
+  // set value to keys of config
   setValue(item, config) {
-    this._config[item] = config[item];
+    this.userConfig[item] = config[item];
   }
+
+  // subscribe to all events and emit them to user.
   enableSubscribers() {
     this.treeService.onDrop.subscribe(
       (event) => {
@@ -118,6 +130,7 @@ export class NgxTreeComponent implements OnInit {
     );
   }
 
+  // get tree data from treeService.
   getTreeData(userTree) {
     this.treeService.getLocalData(userTree).subscribe(
       (tree: TreeModel) => {
@@ -127,6 +140,12 @@ export class NgxTreeComponent implements OnInit {
       }
     );
   }
+
+  /*
+    Event: onadditem;
+    Add root item ( root item = items haven`t parents );
+    Call addNewItem from treeService.
+  */
   addRootItem() {
       const d = `${new Date().getFullYear()}${new Date().getDay()}${new Date().getTime()}`;
       const elemId =  parseInt( d, 10 );
@@ -134,6 +153,13 @@ export class NgxTreeComponent implements OnInit {
       const name = null;
       this.treeService.addNewItem(elemId, name, type);
   }
+
+  /*
+    Event: ondrop;
+    Get Drag item from treeService.
+    Call dropOnRoot() from treeService.
+    Emit ondrop.
+  */
   onDrop(event, item) {
     const eventObj = {
       event,
@@ -144,11 +170,14 @@ export class NgxTreeComponent implements OnInit {
     this.treeService.dropOnRoot(dragItem);
     event.preventDefault();
   }
-  onDragStart(event) {
-    this.ondragstart.emit(event);
-  }
-  onDropChild(event) {
-    this.ondrop.emit(event);
+
+  /*
+    Event: onallowdrop;
+    Emit onAllowDrop on tree service.
+  */
+  allowDrop(event) {
+    event.preventDefault();
+    this.treeService.onAllowDrop.next(event);
   }
 
   ngOnInit() {}
