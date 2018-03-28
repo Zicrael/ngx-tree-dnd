@@ -3,7 +3,7 @@
 
 Angular 5 support tree with drag-and-drop, no dependencies, AoT compilation. Its simple and fast.
 
-### [![support on patreon](http://www.artofdawn.com/wp-content/uploads/2015/11/support-my-work-patreon.png)](https://www.patreon.com/bePatron?u=10448808)
+### [![support on patreon](http://www.castlevaniaboardgame.com/uploads/4/9/3/8/49385753/becomeapatronbanner_5_orig.png)](https://www.patreon.com/bePatron?u=10448808)
 
 ## Installation
 
