@@ -1,9 +1,9 @@
-# ngx-tree-dnd  [![npm version](https://badge.fury.io/js/ngx-tree-dnd.svg)](https://badge.fury.io/js/ngx-tree-dnd) [![npm monthly downloads](https://img.shields.io/npm/dt/ngx-tree-dnd.svg)](https://www.npmjs.com/package/ngx-tree-dnd) [![Dependency Status](https://david-dm.org/zicrael/ngx-tree-dnd.svg)](https://david-dm.org/zicrael/ngx-tree-dnd) [![Build status](https://api.travis-ci.org/Zicrael/ngx-tree-dnd.svg?branch=master)](https://travis-ci.org/Zicrael/ngx-tree-dnd) 
+# ngx-tree-dnd  [![npm version](https://badge.fury.io/js/ngx-tree-dnd.svg)](https://badge.fury.io/js/ngx-tree-dnd) [![npm downloads](https://img.shields.io/npm/dt/ngx-tree-dnd.svg)](https://www.npmjs.com/package/ngx-tree-dnd) [![Dependency Status](https://david-dm.org/zicrael/ngx-tree-dnd.svg)](https://david-dm.org/zicrael/ngx-tree-dnd) [![Build status](https://api.travis-ci.org/Zicrael/ngx-tree-dnd.svg?branch=master)](https://travis-ci.org/Zicrael/ngx-tree-dnd) 
 
 
 Angular 5 support tree with drag-and-drop, no dependencies, AoT compilation. Its simple and fast.
 
-<a href="https://www.patreon.com/bePatron?u=10448808" data-patreon-widget-type="become-patron-button">Become a Patron!</a><script async src="https://c6.patreon.com/becomePatronButton.bundle.js"></script>
+### [![support on patreon](https://maggiederrick.files.wordpress.com/2017/12/patreon.png)](https://www.patreon.com/zicrael)
 
 ## Installation
 
