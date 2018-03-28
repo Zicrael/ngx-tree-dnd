@@ -3,6 +3,8 @@
 
 Angular 5 support tree with drag-and-drop, no dependencies, AoT compilation. Its simple and fast.
 
+<a href="https://www.patreon.com/bePatron?u=10448808" data-patreon-widget-type="become-patron-button">Become a Patron!</a><script async src="https://c6.patreon.com/becomePatronButton.bundle.js"></script>
+
 ## Installation
 
 To install library, run:
