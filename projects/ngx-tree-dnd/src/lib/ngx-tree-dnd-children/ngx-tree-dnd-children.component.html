@@ -1,0 +1,71 @@
+<div class='tree-child' id={{element.id}} libDragElement [draggableValue]='element.options.draggable' [item]='element' [ngClass]="{disabled : element.options.disabled}">
+  <div *ngIf="element && element.options" class='d-flex'>
+    <div *ngIf='config' [ngClass]="{hidden : element.options.hidden}">
+      <div class='tree-title d-inline-flex pos-relative' [ngClass]="{destenationTop : element.options.destenationTop, destenationBottom: element.options.destenationBottom}" *ngIf="!element.options.edit;else onEdit">
+        <div *ngIf="!config.setItemsAsLinks; else link" [ngClass]="{addOpacity : element.options.currentlyDragging}" libDropElement
+          [item]='element' class='draggable-item'>
+          {{element.name}}
+        </div>
+        <ng-template #link>
+          <div [ngClass]="{addOpacity : element.options.currentlyDragging}" libDropElement
+          [item]='element' class='draggable-item'>
+            <a [href]="element.options.href" class='tree-link'>{{element.name}}</a>
+          </div>
+        </ng-template>
+        <div class='d-flex buttons-bar' *ngIf="config.showActionButtons && element.options.showActionButtons && !element.options.disabled">
+          <div class='d-flex'>
+            <button class="tree-btn add-btn" *ngIf="config.showAddButtons" (click)="submitAdd(null, element)">
+              <fa-icon icon="plus" [style.font-size.px]='config.setIconSize'></fa-icon>
+            </button>
+          </div>
+          <div class='d-flex'>
+            <button class="tree-btn edit-btn" *ngIf="config.showRenameButtons" (click)="element.options.edit = true">
+              <fa-icon icon="edit" [style.font-size.px]='config.setIconSize'></fa-icon>
+            </button>
+          </div>
+          <div class='d-flex'>
+            <button class="tree-btn delete-btn" *ngIf="config.showDeleteButtons && element.options.showDeleteButton" (click)="onSubmitDelete( element )">
+              <fa-icon icon="times" [style.font-size.px]='config.setIconSize'></fa-icon>
+            </button>
+          </div>
+        </div>
+        <div class='child-drop-place' [attr.data-id]='element.id' libDropElement *ngIf='element.options.showDropChildZone && !element.options.disabled'>
+          <fa-icon icon="arrow-down" [style.font-size.px]='config.setIconSize'></fa-icon>
+        </div>
+        <div class='show-hide-switch' *ngIf="config.enableExpandButtons && element.options.showExpandButton && element.childrens.length > 0 && !element.options.disabled">
+          <div *ngIf="element.options.hideChildrens; else visible">
+            <button class='tree-btn show-btn' (click)='element.options.hideChildrens = false'>
+              <fa-icon icon="plus" [style.font-size.px]='config.setIconSize'></fa-icon>
+            </button>
+          </div>
+          <ng-template #visible>
+            <button class='tree-btn hide-btn' (click)='element.options.hideChildrens = true'>
+              <fa-icon icon="minus" [style.font-size.px]='config.setIconSize'></fa-icon>
+            </button>
+          </ng-template>
+        </div>
+      </div>
+      <ng-template #onEdit>
+        <div class='tree-title d-inline-flex'>
+          <form [formGroup]="renameForm" class='d-flex' (submit)='submitRename(element)'>
+            <input type="text" class='input-rename' formControlName="name" libAutoFocus="true" [style.font-size.px]='config.setFontSize'>
+          </form>
+          <div class='d-flex'>
+            <button class='tree-btn submit-btn' (click)='submitRename(element)'>
+              <fa-icon icon="check" [style.font-size.px]='config.setIconSize'></fa-icon>
+            </button>
+            <button class='tree-btn delete-btn' (click)='onSubmitDelete(element)'>
+              <fa-icon icon="times" [style.font-size.px]='config.setIconSize'></fa-icon>
+            </button>
+            <div class='error-edit-wrap' *ngIf="showError">
+              {{config.validationText}}
+            </div>
+          </div>
+        </div>
+      </ng-template>
+      <div class="tree-content" *ngIf="element.childrens && !element.options.hideChildrens">
+        <lib-ngx-tree-children [setItem]="child" *ngFor='let child of element.childrens'></lib-ngx-tree-children>
+      </div>
+    </div>
+  </div>
+</div>

@@ -3,48 +3,34 @@
  This project is licensed under the terms of the MIT license.
  https://github.com/Zicrael/ngx-tree-dnd
  */
-import { Component, OnInit, Input, ViewChild, Output, EventEmitter } from '@angular/core';
-import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Component, Input, Output, EventEmitter, AfterViewInit } from '@angular/core';
 
-import { NgxTreeService } from './ngx-tree-dnd.service';
-import { TreeModel, TreeConfig } from './tree-view.model';
+import { NgxTreeService } from '../ngx-tree-dnd.service';
+import { TreeModel, TreeConfig } from '../models/tree-view.model';
 
 @Component({
-  selector: 'ngx-tree-component',
-  template: `
-  <div id='three-wrapper' *ngIf="treeView">
-  <div class='root-title' (drop)="onDrop($event, treeView)" (dragover)="allowDrop($event)">
-    {{userConfig.setRootTitle}}
-  </div>
-  <div class='tree-child'>
-    <div class="tree-content">
-        <ngx-tree-children *ngFor="let item of treeView" [setItem]="item"></ngx-tree-children>
-    </div>
-  </div>
-  <button class='btn-add-small' *ngIf="userConfig.showAddRootBtn" (click)='addRootItem()'>
-  <span></span>
-  <span></span>
-  </button>
-</div>
-  `
+  selector: 'lib-ngx-tree-component',
+  templateUrl: './ngx-tree-dnd-parent.component.html'
 })
-export class NgxTreeComponent implements OnInit {
-  treeView: TreeModel;
-  type: string;
+export class NgxTreeParentComponent implements AfterViewInit {
+  treeView: TreeModel[];
   userConfig: TreeConfig = {
-      showAddRootBtn: true,
-      showItemActionBtns: true,
-      showAddItemButton: true,
-      showRenameButton: true,
-      showDeleteButton: true,
-      enableShowHideBtns: true,
+      showActionButtons: true,
+      showAddButtons: true,
+      showRenameButtons: true,
+      showDeleteButtons: true,
+      enableExpandButtons: true,
       enableDragging: true,
-      setRootTitle: 'Root',
-      setErrorValidationText: 'Enter valid name',
-      setMinValidationCountChars: 1,
-      setTreeItemAsLinks: false
+      rootTitle: 'Root',
+      validationText: 'Enter valid name',
+      minCharacterLength: 1,
+      setItemsAsLinks: false,
+      setFontSize: 16,
+      setIconSize: 14
     };
   @Output() ondragstart: EventEmitter<any> = new EventEmitter();
+  @Output() ondragenter: EventEmitter<any> = new EventEmitter();
+  @Output() ondragleave: EventEmitter<any> = new EventEmitter();
   @Output() ondrop: EventEmitter<any> = new EventEmitter();
   @Output() onallowdrop: EventEmitter<any> = new EventEmitter();
   @Output() ondragend: EventEmitter<any> = new EventEmitter();
@@ -73,9 +59,7 @@ export class NgxTreeComponent implements OnInit {
       this.getTreeData(item);
   }
 
-  constructor(public treeService: NgxTreeService, private fb: FormBuilder) {
-    // set type root
-    this.type = 'root';
+  constructor(public treeService: NgxTreeService ) {
     this.enableSubscribers();
   }
 
@@ -127,57 +111,31 @@ export class NgxTreeComponent implements OnInit {
         this.onremoveitem.emit(event);
       }
     );
+    this.treeService.onDragEnter.subscribe(
+      (event) => {
+        this.ondragenter.emit(event);
+      }
+    );
+    this.treeService.onDragLeave.subscribe(
+      (event) => {
+        this.ondragleave.emit(event);
+      }
+    );
   }
 
   // get tree data from treeService.
   getTreeData(userTree) {
     this.treeService.getLocalData(userTree).subscribe(
-      (tree: TreeModel) => {
+      (tree: TreeModel[]) => {
         this.treeView = tree;
+        setTimeout( () => {
+          this.treeService.sortTree();
+        });
       }, (error) => {
         console.log(error);
       }
     );
   }
 
-  /*
-    Event: onadditem;
-    Add root item ( root item = items haven`t parents );
-    Call addNewItem from treeService.
-  */
-  addRootItem() {
-      const d = `${new Date().getFullYear()}${new Date().getDay()}${new Date().getTime()}`;
-      const elemId =  parseInt( d, 10 );
-      const type = 'root';
-      const name = null;
-      this.treeService.addNewItem(elemId, name, type);
-  }
-
-  /*
-    Event: ondrop;
-    Get Drag item from treeService.
-    Call dropOnRoot() from treeService.
-    Emit ondrop.
-  */
-  onDrop(event, item) {
-    const eventObj = {
-      event,
-      target: item
-    };
-    this.ondrop.emit(eventObj);
-    const dragItem = this.treeService.isDragging;
-    this.treeService.dropOnRoot(dragItem);
-    event.preventDefault();
-  }
-
-  /*
-    Event: onallowdrop;
-    Emit onAllowDrop on tree service.
-  */
-  allowDrop(event) {
-    event.preventDefault();
-    this.treeService.onAllowDrop.next(event);
-  }
-
-  ngOnInit() {}
+  ngAfterViewInit() {}
 }

@@ -16,13 +16,8 @@
   "bugs": {
     "url": "https://github.com/Zicrael/ngx-tree-dnd/issues"
   },
-  "main": "ngx-tree-dnd.umd.js",
-  "module": "ngx-tree-dnd.js",
-  "jsnext:main": "ngx-tree-dnd.js",
-  "typings": "ngx-tree-dnd.d.ts",
   "peerDependencies": {
-    "@angular/core": "^4.0.0",
-    "rxjs": "^5.1.0",
-    "zone.js": "^0.8.4"
+    "@angular/common": "^6.0.0-rc.0 || ^6.0.0",
+    "@angular/core": "^6.0.0-rc.0 || ^6.0.0"
   }
 }

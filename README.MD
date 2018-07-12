@@ -7,6 +7,7 @@ Angular 5 support tree with drag-and-drop, no dependencies, AoT compilation. Its
 [![support on patreon](https://maggiederrick.files.wordpress.com/2017/12/patreon.png)](https://www.patreon.com/zicrael)
 
 ## Installation
+New ngx-tree-dnd with draggable/sortable tree data, easy for use.
 
 To install library, run:
 
@@ -15,9 +16,6 @@ $ npm install ngx-tree-dnd --save
 ```
 
 ## Import NgxTreeModule module
-
-Import DndModule.forRoot() in the NgModule of your application. The forRoot method is a convention
-for modules that provide a singleton service.
 
 ```typescript
 import { BrowserModule } from '@angular/platform-browser';
@@ -93,9 +91,9 @@ Demo application:
 
 [Run on stackblitz.com](https://ngx-tree-dnd.stackblitz.io)
 
-## NGX-TREE-DND API
+## NGX-TREE-DND DOCS
 
-With the development of the plug-in API will be replenished. So do not forget update the packadge.
+With the development of the plug-in docs will be replenished. So do not forget update the packadge.
 
 ### 1.Set the base tree 
 
@@ -111,9 +109,19 @@ The interface accepts only the following structure:
     childrens: TreeModel[]; // childrens list
 }
 export interface TreeItemOptions {
-    href?: string; // href for <a> tag if enable setTreeItemAsLinks on config
-    isHidden?: boolean; // hide childrens
-    currentlyDragging?: boolean; // enable only where element is drugging.
+    // item options
+    href?: string;
+    hidden?: boolean;
+    hideChildrens?: boolean;
+    draggable?: boolean;
+    position?: number;
+    edit?: boolean;
+    disabled?: boolean;
+    // item buttons
+    showDropChildZone?: boolean;
+    showActionButtons?: boolean;
+    showDeleteButton?: boolean;
+    showExpandButton?: boolean;
 }
 ```
 
@@ -162,6 +170,42 @@ in you component file:
 
 ```typescript
     onDragStart(event) {
+    console.log(event);
+  }
+```
+
+### ondragenter()
+Trigger if draggable element enter to drop zone.
+
+#### example 
+
+in you template file:
+
+```xml
+<ngx-tree-component [treeData]='youTree' (ondragenter)='onDragEnter($event)'> </ngx-tree-component>
+```
+in you component file:
+
+```typescript
+    onDragEnter(event) {
+    console.log(event);
+  }
+```
+
+### ondragleave()
+Trigger if draggable element enter to drop zone.
+
+#### example 
+
+in you template file:
+
+```xml
+<ngx-tree-component [treeData]='youTree' (ondragleave)='onDragLeave($event)'> </ngx-tree-component>
+```
+in you component file:
+
+```typescript
+    onDragLeave(event) {
     console.log(event);
   }
 ```
@@ -287,23 +331,24 @@ in you component file:
 
 ```typescript
     config =  {
-      enableDragging: true, // enable / disable dragging elements
-      setRootTitle: "I am name of the root title", // set title root name.
-      enableShowHideBtns: true,  // enable / disable show/hide tree elements button.
-      showItemActionBtns: true, // enable / disable item action buttons.
-      showAddRootBtn: true, // enable / disable add root tree button.
-      showAddItemButton: true, // enable / disable add children button.
-      showRenameButton: true, // enable / disable rename item button.
-      showDeleteButton: true, // enable / disable delete item button.
-      setErrorValidationText: "I can be change", // set error validate text.
-      setMinValidationCountChars: 3, // Set count of name min chars on tree.
-      setTreeItemAsLinks: true // set name of items as <a> and set link from item.options.href .
+      showActionButtons: true, // show/hide action buttons for all elements
+      showAddButtons: true, // show/hide add button for all elements
+      showRenameButtons: true, // show/hide rename buttons for all elements
+      showDeleteButtons: true, // show/hide delete buttons for all elements
+      enableExpandButtons: true, // // show/hide expand buttons for all elements
+      enableDragging: true, // enable/disable dragging
+      rootTitle: 'Root', // Tree titile name
+      validationText: 'Enter valid name', // form validation text 
+      minCharacterLength: 1, // minimum valid chars
+      setItemsAsLinks: false, // set tree as <a> link-items, use 'href' option for set link.
+      setFontSize: 16, // font-size of items in tree.
+      setIconSize: 14 // font-size of font-awesome icons inside buttons.
     }
 ```
 
 ### 4. Items options
 
-You can change items options by set 'options' key on item object : 
+You can change items options by set 'options' key on item object.
 
 #### example 
 
@@ -312,22 +357,20 @@ in you component file:
 ```typescript
     youTree = [
       {
-        name: 'first elem',
-        id: 1234567890,
+        name: 'google.com',
+        id: 777,
         options: {
-          href: 'www.google.com', // set href to <a> title if config.setTreeItemAsLinks = true, you can style it by .tree-link class.
-          isHidden: true, // hide childrens list element as default, but you can open it if config.enableShowHideBtns = true
-          position: 1 // no effect. It will be used on feature versions.
-        }
-        childrens: []
-      },
-      {
-        name: 'second elem',
-        id: 0987654321,
-        options: {
-          href: 'www.apple.com', // set href to <a> title if config.setTreeItemAsLinks = true, you can style it by .tree-link class.
-          isHidden: false, // hide childrens list element as default, but you can open it if config.enableShowHideBtns = true
-          position: 2 // no effect. It will be used on feature versions. (But you can use it).
+            // item options
+            href: 'google.com', // item href for <a> , use if you set 'setItemsAsLinks: true' in config.
+            hidden: 'false', // hide element without removing from data array.
+            hideChildrens: false, // hide childrens of element.
+            draggable: true, // allow block dragging single element if set 'enableDragging: true'
+            position: 1,  // set position of item for sort tree.
+            disabled: false, // disaled buttons and add opacity to element.
+            // buttons
+            showActionButtons: true, // show/hide  action buttons for element.
+            showDeleteButton: true, // if 'false' element cannot be deleted.
+            showExpandButton: true // show/hide expand buttons for element.
         }
         childrens: []
       }
@@ -339,6 +382,7 @@ in you component file:
   You can rewrite all styles like you want. Here some for example:
 
 ```css
+  /* ===Tree items=== */
   .tree-child {
     /* change styles for child elements */
   }
@@ -351,17 +395,39 @@ in you component file:
   .tree-link {
     /* change styles for links if  config.setTreeItemAsLinks = true  */
   }
-  .btn-add-small, .btn-remove-small, .btn-edit-small, .btn-accept-edit-small {
-    /* change styles for buttons if  config.showItemActionBtns = true  */
-  }
+  /* ===Form=== */
   .input-rename {
     /* change styles for input name/rename  */
   }
+  /* ===Buttons=== */
+  .tree-btn {
+    /*  used in all tree buttons  */
+  }
+  .add-btn {
+      /*  styles for add button  */
+  }
+  .submit-btn {
+      /*  styles for submit button  */
+  }
+  .edit-btn {
+      /*  styles for edit button  */
+  }
+  .delete-btn {
+      /*  styles for delete button  */
+  }
+  .show-btn {
+      /*  styles for show expand button  */
+  }
+  .hide-btn {
+      /*  styles for hide expand button  */
+  }
 ```
 
-### Thank you for use my plug-in. 
+### Thank you for use my plug-in! Subscribe for more plugins! :)  
 
-Made with love by Yaroslav Kikot.
+Twitch: https://www.twitch.tv/zicrael
+
+Made with love by Zicrael(Yaroslav Kikot) ^^
 
 ## License
 

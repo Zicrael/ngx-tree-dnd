@@ -1,0 +1,10 @@
+<div id='threeWrapper' *ngIf="treeView" [style.font-size.px]='userConfig.setFontSize'>
+    <div class='root-title'>
+      {{userConfig.rootTitle}}
+    </div>
+    <div class='tree-child'>
+      <div class="tree-content-main">
+          <lib-ngx-tree-children [setItem]="clild" *ngFor='let clild of treeView'></lib-ngx-tree-children>
+      </div>
+    </div>
+  </div>
