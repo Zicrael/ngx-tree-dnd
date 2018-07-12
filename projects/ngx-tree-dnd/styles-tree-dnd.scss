@@ -1,0 +1,152 @@
+/*
+ Copyright (C) 2018 Yaroslav Kikot
+ This project is licensed under the terms of the MIT license.
+ https://github.com/Zicrael/ngx-tree-dnd
+ */
+
+/* Tree main styles */
+.tree-child {
+    user-select: none;
+    width: fit-content;
+    box-sizing: border-box;
+    position: relative;
+}
+.tree-title {
+    position: relative;
+    padding-left: 21px;
+    align-items: center;
+    border: 1px solid transparent;
+    border-top: 5px solid transparent;
+    border-bottom: 5px solid transparent;
+}
+.tree-title::before {
+    position: absolute;
+    left: -1px;
+    top: calc(50% - 0.5px);
+    background-color: #444;
+    height: 3px;
+    width: 20px;
+    align-items: center;
+    content: '';
+}
+
+.destenationTop {
+    border-top: 5px solid rgba(255, 0, 0, 0.5);
+}
+.destenationBottom {
+    border-bottom: 5px solid rgba(255, 0, 0, 0.5);
+}
+
+.tree-content {
+    margin-left: 50px;
+    border-left: 3px solid #444 ;
+    position: relative;
+}
+.tree-content-main {
+    margin-left: 20px;
+    border-left: 3px solid #444 ;
+    position: relative;
+}
+
+.draggable-item {
+    margin-right: 5px;
+}
+
+.child-drop-place {
+    display: flex;
+    align-items: center;
+    color: #ccc ;
+    justify-content: center;
+    background-color: transparent;
+    border:none;
+    border-radius: 2px;
+    outline-color: none;
+    height: 20px;
+    width: 20px;
+    cursor: pointer;
+    padding: 0;
+}
+
+.child-drop-place fa-icon {
+    pointer-events: none;
+}
+
+.buttons-bar > div{
+    align-items: center;
+}
+.tree-btn {
+    display: flex;
+    align-items: center;
+    color: #ccc ;
+    justify-content: center;
+    background-color: transparent;
+    border:none;
+    border-radius: 2px;
+    outline-color: none;
+    cursor: pointer;
+    padding: 0;
+    padding: 3px;
+    transition: color 0.2s ease-in-out;
+}
+
+.add-btn:hover, .submit-btn:hover {
+    color: green;
+}
+
+.edit-btn:hover {
+    color: skyblue;
+}
+
+.delete-btn:hover {
+    color: red;
+}
+
+.show-btn, .hide-btn {
+    background-color: #ccc;
+    color: #000;
+    height: 18px;
+    width: 18px;
+    padding: 0;
+    font-size: 14px;
+    align-items: center;
+    display: flex;
+}
+
+/* childrens styles */
+.input-rename {
+    padding-left: 5px;
+    padding-right: 5px;
+    margin: 0 15px 0 0;
+    font-weight: inherit;
+    max-width: 200px;
+    font-family: inherit;
+    outline: none;
+}
+.show-hide-switch {
+    position: absolute;
+    top: calc(50% - 7.5px);
+    left: -10px;
+}
+.error-edit-wrap {
+    margin-left: 5px;
+    color: #d33;
+}
+.addOpacity {
+    opacity: 0.5;
+}
+.hidden {
+    display: none !important;
+}
+/* tool classes styles */
+.d-flex {
+    display: flex;
+}
+.d-inline-flex {
+    display: inline-flex;
+}
+.text-center {
+    text-align: center;
+}
+.pos-relative {
+    position: relative;
+}

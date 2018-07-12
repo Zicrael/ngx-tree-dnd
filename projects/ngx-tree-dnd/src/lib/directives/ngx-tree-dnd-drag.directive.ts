@@ -1,3 +1,8 @@
+/*
+ Copyright (C) 2018 Yaroslav Kikot
+ This project is licensed under the terms of the MIT license.
+ https://github.com/Zicrael/ngx-tree-dnd
+*/
 import { Directive, ElementRef, HostListener, Input, HostBinding } from '@angular/core';
 import { TreeModel } from '../models/tree-view.model';
 import { NgxTreeService } from '../ngx-tree-dnd.service';

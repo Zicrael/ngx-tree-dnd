@@ -1,6 +1,6 @@
 # ngx-tree-dnd  [![npm version](https://badge.fury.io/js/ngx-tree-dnd.svg)](https://badge.fury.io/js/ngx-tree-dnd) [![npm downloads](https://img.shields.io/npm/dt/ngx-tree-dnd.svg)](https://www.npmjs.com/package/ngx-tree-dnd)
 
-Angular 5 support tree with drag-and-drop, no dependencies, AoT compilation. Its simple and fast.
+Angular 6 support tree with drag-and-drop sortable data tree. It`s fast and smart.
 
 [![Dependency Status](https://david-dm.org/zicrael/ngx-tree-dnd.svg)](https://david-dm.org/zicrael/ngx-tree-dnd)  [![Build status](https://api.travis-ci.org/Zicrael/ngx-tree-dnd.svg?branch=master)](https://travis-ci.org/Zicrael/ngx-tree-dnd) [![Known Vulnerabilities](https://snyk.io/test/github/zicrael/ngx-tree-dnd/badge.svg?targetFile=package.json)](https://snyk.io/test/github/zicrael/ngx-tree-dnd?targetFile=package.json) [![License MIT](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/zicrael/ngx-tree-dnd/blob/master/LICENSE)
 
@@ -29,8 +29,8 @@ import { NgxTreeModule } from 'ngx-tree-dnd'; // here
   ],
   imports: [
     BrowserModule,
-    NgxTreeModule.forRoot() // and import here, do not forget .forRoot()
-    LibraryModule
+    NgxTreeModule   // add  NgxTreeModule to imports
+    LibraryModule 
   ],
   providers: [],
   bootstrap: [AppComponent]
@@ -38,7 +38,7 @@ import { NgxTreeModule } from 'ngx-tree-dnd'; // here
 export class AppModule { }
 ```
 
-Once library is imported, you can use its components, directives and pipes in your Angular application:
+Once library is imported, you can use it`s components, directives and pipes in your Angular application:
 
 ```xml
 <h1>
@@ -49,7 +49,7 @@ Once library is imported, you can use its components, directives and pipes in yo
 
 ## Styles
 
-You must import default styles for tree ( you can change them by rewrite classes )
+You need to import default styles for tree ( you can change them by rewrite classes )
 
 ```json
 "apps": [
