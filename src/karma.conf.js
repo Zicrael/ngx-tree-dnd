@@ -24,10 +24,10 @@ module.exports = function (config) {
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,
-    autoWatch: false,
-    captureTimeout: 30000,
+    autoWatch: true,
+    captureTimeout: 25000,
     browserNoActivityTimeout: 50000,
-    browsers: ['ChromeHeadless'],
+    browsers: ['Chrome'],
     customLaunchers: {
       ChromeHeadless: {
         base: 'Chrome',

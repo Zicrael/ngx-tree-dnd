@@ -3,11 +3,11 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
-    "test": "ng test",
-    "lint": "ng lint",
-    "e2e": "ng e2e"
+    "start": "ng serve ngx-tree-dnd",
+    "build": "ng build ngx-tree-dnd",
+    "test": "ng test ngx-tree-dnd",
+    "lint": "ng lint ngx-tree-dnd",
+    "e2e": "ng e2e ngx-tree-dnd"
   },
   "private": true,
   "dependencies": {
