@@ -25,9 +25,22 @@ module.exports = function (config) {
     colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: false,
-    captureTimeout: 20000,
-    browserNoActivityTimeout: 40000,
-    browsers: ['Chrome'],
-    singleRun: true
+    captureTimeout: 30000,
+    browserNoActivityTimeout: 50000,
+    browsers: ['ChromeHeadless'],
+    customLaunchers: {
+      ChromeHeadless: {
+        base: 'Chrome',
+        flags: [
+          '--headless',
+          '--disable-gpu',
+          '--disable-translate',
+          '--disable-extensions',
+          '--no-sandbox',  // Added to fix an issue where of Failed to connect to chrome browser
+        '--remote-debugging-port=9222',
+        ]
+      }
+    },
+    singleRun: false
   });
 };
