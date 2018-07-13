@@ -40,6 +40,8 @@ export class DropElementsDirective {
             event,
             target: this.item
         };
+        dragItem.options.hideChildrens = this.treeService.lastExpandState;
+        dragItem.options.currentlyDragging = false;
         if (dragItem !== eventObj.target) {
             this.treeService.onDropItem(eventObj);
         }

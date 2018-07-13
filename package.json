@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve ngx-tree-dnd",
-    "build": "ng build ngx-tree-dnd",
+    "start": "ng serve",
+    "build": "ng build ngx-tree-dnd --prod",
     "test": "ng test ngx-tree-dnd",
     "lint": "ng lint ngx-tree-dnd",
     "e2e": "ng e2e ngx-tree-dnd"
