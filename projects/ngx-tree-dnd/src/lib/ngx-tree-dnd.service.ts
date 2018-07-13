@@ -348,7 +348,9 @@ export class NgxTreeService {
       this.treeStorage[0].options.showDeleteButton = false;
     } else {
       for (const el of this.treeStorage) {
-        el.options.showDeleteButton = true;
+        if (el && el.options) {
+          el.options.showDeleteButton = true;
+        }
       }
     }
   }
