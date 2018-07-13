@@ -24,8 +24,10 @@ module.exports = function (config) {
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,
-    autoWatch: true,
+    autoWatch: false,
+    captureTimeout: 20000,
+    browserNoActivityTimeout: 40000,
     browsers: ['Chrome'],
-    singleRun: false
+    singleRun: true
   });
 };
