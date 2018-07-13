@@ -24,6 +24,7 @@
     "@fortawesome/fontawesome-svg-core": "^1.2.0",
     "@fortawesome/free-solid-svg-icons": "^5.1.0",
     "core-js": "^2.5.4",
+    "karma-phantomjs-launcher": "^1.0.4",
     "ngx-tree-dnd": "^2.0.1",
     "rxjs": "^6.0.0",
     "zone.js": "^0.8.26"
