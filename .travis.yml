@@ -1,7 +1,5 @@
 language: node_js
-sudo: 
 node_js:
-  - "iojs"
   - "8"
 cache:
   directories:
