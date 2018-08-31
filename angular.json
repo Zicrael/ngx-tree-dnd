@@ -24,7 +24,7 @@
             ],
             "styles": [
               "src/styles.css",
-              "projects/ngx-tree-dnd/styles-tree-dnd.css"
+              "dist/ngx-tree-dnd/lib/styles-tree-dnd.css"
             ],
             "scripts": []
           },
@@ -68,7 +68,7 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "src/test.ts",
+            "main": "projects/ngx-tree-dnd/src/test.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "src/tsconfig.spec.json",
             "karmaConfig": "projects/ngx-tree-dnd/karma.conf.js",
@@ -145,6 +145,7 @@
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
             "main": "projects/ngx-tree-dnd/src/test.ts",
+            "polyfills": "src/polyfills.ts",
             "tsConfig": "projects/ngx-tree-dnd/tsconfig.spec.json",
             "karmaConfig": "projects/ngx-tree-dnd/karma.conf.js"
           }

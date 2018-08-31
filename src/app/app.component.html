@@ -1,6 +1,6 @@
 <!--The content below is only a placeholder and can be replaced.-->
 <div>
-  <lib-ngx-tree-component [treeData]='myTree' [config]='config'>
+  <lib-ngx-tree-component [treeData]='myTree' (ondrop)='onDrop($event)' [config]='config'>
   </lib-ngx-tree-component>
 </div>
 

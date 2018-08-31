@@ -70,4 +70,9 @@ export class AppComponent {
       childrens: []
     }
   ];
+
+  onDrop(event) {
+    console.log(this.myTree);
+    console.log(event);
+  }
 }

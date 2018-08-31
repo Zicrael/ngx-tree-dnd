@@ -4,8 +4,6 @@ Angular 6 support tree with drag-and-drop sortable data tree. It`s fast and smar
 
 [![Dependency Status](https://david-dm.org/zicrael/ngx-tree-dnd.svg)](https://david-dm.org/zicrael/ngx-tree-dnd)  [![Build status](https://api.travis-ci.org/Zicrael/ngx-tree-dnd.svg?branch=master)](https://travis-ci.org/Zicrael/ngx-tree-dnd) [![Known Vulnerabilities](https://snyk.io/test/github/zicrael/ngx-tree-dnd/badge.svg?targetFile=package.json)](https://snyk.io/test/github/zicrael/ngx-tree-dnd?targetFile=package.json) [![License MIT](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/zicrael/ngx-tree-dnd/blob/master/LICENSE)
 
-[![support on patreon](https://maggiederrick.files.wordpress.com/2017/12/patreon.png)](https://www.patreon.com/zicrael)
-
 ## Installation
 New ngx-tree-dnd with draggable/sortable tree data, easy for use.
 
@@ -29,7 +27,7 @@ import { NgxTreeModule } from 'ngx-tree-dnd'; // here
   ],
   imports: [
     BrowserModule,
-    NgxTreeModule   // add  NgxTreeModule to imports
+    NgxTreeModule,   // add  NgxTreeModule to imports
     LibraryModule 
   ],
   providers: [],
@@ -426,6 +424,8 @@ in you component file:
 ### Thank you for use my plug-in! Subscribe for more plugins! :)  
 
 Twitch: https://www.twitch.tv/zicrael
+
+[![support on patreon](https://maggiederrick.files.wordpress.com/2017/12/patreon.png)](https://www.patreon.com/zicrael)
 
 Made with love by Zicrael(Yaroslav Kikot) ^^
 

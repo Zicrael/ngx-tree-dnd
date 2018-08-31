@@ -16,6 +16,7 @@ export class DropElementsDirective {
 
     /*
         Event: onallowdrop;
+        Call onDragOver() from tree service.
         Emit onAllowDrop on tree service.
     */
     @HostListener('dragover', ['$event'])
@@ -24,13 +25,12 @@ export class DropElementsDirective {
             event,
             target: this.item
         };
-        this.treeService.onAllowDrop.next(eventObj);
         this.treeService.onDragOver(eventObj);
         event.preventDefault();
     }
     /*
         Event: ondrop;
-        Call dropAction() from tree service.
+        Call onDropItem() from tree service.
         Emit OnDrop on tree service.
     */
     @HostListener('drop', ['$event'])
@@ -45,7 +45,6 @@ export class DropElementsDirective {
         if (dragItem !== eventObj.target) {
             this.treeService.onDropItem(eventObj);
         }
-        this.treeService.onDrop.next(eventObj);
         event.preventDefault();
     }
 
@@ -62,7 +61,6 @@ export class DropElementsDirective {
         target: this.item
         };
         this.treeService.enterDropZone(eventObj);
-        this.treeService.onDragEnter.next(eventObj);
     }
 
     /*
@@ -78,7 +76,6 @@ export class DropElementsDirective {
         event,
         target: this.item
         };
-        this.treeService.onDragLeave.next(eventObj);
         // code
         this.treeService.leaveDropZone(eventObj);
     }

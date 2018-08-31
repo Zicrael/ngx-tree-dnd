@@ -37,7 +37,6 @@ export class DragElementsDirective {
       this.item.options.currentlyDragging = true;
       // call service func
       this.treeService.startDragging(eventObj);
-      this.treeService.onDragStart.next(eventObj);
       event.stopPropagation();
     }
 
@@ -52,7 +51,7 @@ export class DragElementsDirective {
         event,
         target: this.item
       };
-      this.treeService.onDrag.next(eventObj);
+      this.treeService.onDragProcess(eventObj);
     }
 
     /*
@@ -68,7 +67,6 @@ export class DragElementsDirective {
       };
       this.item.options.hideChildrens = this.treeService.lastExpandState;
       this.item.options.currentlyDragging = false;
-      this.treeService.onDragEnd.next(eventObj);
       this.treeService.dragEndAction(eventObj);
       event.stopPropagation();
     }

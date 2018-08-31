@@ -116,10 +116,10 @@ export class NgxTreeService {
       element: createObj,
       parentList: this.selectedElement
     };
-    this.onAddItem.next(eventEmit);
     this.elementFinder(this.treeStorage, parent.id);
     this.selectedElement.childrens.push(createObj);
     this.clearAction();
+    this.onAddItem.next(eventEmit);
   }
 
   /*
@@ -132,12 +132,12 @@ export class NgxTreeService {
       element: this.selectedElement,
       parentList: this.listOfSelectedElement
     };
-    this.onRemoveItem.next(eventEmit);
     this.elementFinder(this.treeStorage, id);
     const i = this.listOfSelectedElement.indexOf(this.selectedElement);
     this.listOfSelectedElement.splice(i, 1);
     this.clearAction();
     this.checkTreeLength();
+    this.onRemoveItem.next(eventEmit);
   }
 
   /*
@@ -152,11 +152,11 @@ export class NgxTreeService {
       element: this.selectedElement,
       parentList: this.listOfSelectedElement
     };
-    this.onRenameItem.next(eventEmit);
     // code
     this.selectedElement.name = name;
     this.selectedElement.options.edit = false;
     this.clearAction();
+    this.onRenameItem.next(eventEmit);
   }
 
   /*
@@ -165,6 +165,7 @@ export class NgxTreeService {
   */
   public startDragging(eventObj) {
     this.switchDropButton(true, this.treeStorage);
+    this.onDragStart.next(eventObj);
   }
 
   /*
@@ -172,7 +173,7 @@ export class NgxTreeService {
    Trigger dragging element
   */
   public onDragProcess(eventObj) {
-    // none
+    this.onDrag.next(eventObj);
   }
 
   /*
@@ -182,6 +183,7 @@ export class NgxTreeService {
   public dragEndAction(eventObj) {
     this.removeDestenationBorders(this.treeStorage);
     this.switchDropButton(false, this.treeStorage);
+    this.onDragEnd.next(eventObj);
   }
 
   /*
@@ -189,7 +191,7 @@ export class NgxTreeService {
     Entering drop zone for styling items.
   */
   public enterDropZone(eventObj) {
-    // none
+    this.onDragEnter.next(eventObj);
   }
 
 
@@ -198,17 +200,18 @@ export class NgxTreeService {
     Detect hover on dropable elements
   */
   public onDragOver(eventObj) {
-      const el = (eventObj.target as TreeModel);
-      if (el && el.id !== this.isDragging.id ) {
-        const elementHalfHeight = eventObj.event.toElement.offsetHeight / 2;
-          if (eventObj.event.offsetY < elementHalfHeight) {
-            el.options.destenationBottom = false;
-            el.options.destenationTop = true;
-          } else  {
-            el.options.destenationBottom = true;
-            el.options.destenationTop = false;
-          }
+    const el = (eventObj.target as TreeModel);
+    if (el && el.id !== this.isDragging.id ) {
+      const elementHalfHeight = eventObj.event.toElement.offsetHeight / 2;
+      if (eventObj.event.offsetY < elementHalfHeight) {
+        el.options.destenationBottom = false;
+        el.options.destenationTop = true;
+      } else  {
+        el.options.destenationBottom = true;
+        el.options.destenationTop = false;
       }
+      this.onAllowDrop.next(eventObj);
+    }
   }
 
   /*
@@ -217,6 +220,7 @@ export class NgxTreeService {
   */
   public leaveDropZone(eventObj) {
       this.removeDestenationBorders(this.treeStorage);
+      this.onDragLeave.next(eventObj);
   }
 
   /*
@@ -233,6 +237,7 @@ export class NgxTreeService {
         } else {
           this.changeItemPosition(eventObj.target, 'down');
         }
+        this.onDrop.next(eventObj);
     } else {
       const dropZoneId = parseInt(eventObj.event.target.getAttribute('data-id'), null);
       this.elementFinder(this.treeStorage, this.isDragging.id);
@@ -241,6 +246,8 @@ export class NgxTreeService {
       this.elementFinder(this.treeStorage, dropZoneId);
       this.selectedElement.childrens.push(copyItem);
       this.sortTree();
+      eventObj.target = this.selectedElement;
+      this.onDrop.next(eventObj);
     }
     this.removeDestenationBorders(this.treeStorage);
     this.switchDropButton(false, this.treeStorage);

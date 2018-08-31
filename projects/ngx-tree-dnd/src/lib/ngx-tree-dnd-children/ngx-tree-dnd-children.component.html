@@ -29,7 +29,7 @@
             </button>
           </div>
         </div>
-        <div class='child-drop-place' [attr.data-id]='element.id' libDropElement *ngIf='element.options.showDropChildZone && !element.options.disabled'>
+        <div class='child-drop-place' [attr.data-id]='element.id'  libDropElement *ngIf='element.options.showDropChildZone && !element.options.disabled'>
           <fa-icon icon="arrow-down" [style.font-size.px]='config.setIconSize'></fa-icon>
         </div>
         <div class='show-hide-switch' *ngIf="config.enableExpandButtons && element.options.showExpandButton && element.childrens.length > 0 && !element.options.disabled">

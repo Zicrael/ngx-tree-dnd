@@ -7,7 +7,7 @@ module.exports = function (config) {
     frameworks: ['jasmine', '@angular-devkit/build-angular'],
     plugins: [
       require('karma-jasmine'),
-      require('karma-chrome-launcher'),
+      require('karma-phantomjs-launcher'),
       require('karma-jasmine-html-reporter'),
       require('karma-coverage-istanbul-reporter'),
       require('@angular-devkit/build-angular/plugins/karma')
@@ -27,20 +27,7 @@ module.exports = function (config) {
     autoWatch: true,
     captureTimeout: 25000,
     browserNoActivityTimeout: 50000,
-    browsers: ['Chrome'],
-    customLaunchers: {
-      ChromeHeadless: {
-        base: 'Chrome',
-        flags: [
-          '--headless',
-          '--disable-gpu',
-          '--disable-translate',
-          '--disable-extensions',
-          '--no-sandbox',  // Added to fix an issue where of Failed to connect to chrome browser
-        '--remote-debugging-port=9222',
-        ]
-      }
-    },
+    browsers: ['phantomJS'],
     singleRun: false
   });
 };
