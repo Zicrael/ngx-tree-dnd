@@ -20,14 +20,17 @@ module.exports = function (config) {
       reports: ['html', 'lcovonly'],
       fixWebpackSourcePaths: true
     },
+    mime: {
+      "text/x-typescript": ["ts", "tsx"],
+    },
     reporters: ['progress', 'kjhtml'],
-    port: 9876,
+    port: 9876,  // karma web server port
     colors: true,
     logLevel: config.LOG_INFO,
+    browsers: ['PhantomJS'],
     autoWatch: true,
-    browsers: [
-      'PhantomJS'
-    ],
-    singleRun: false
+    singleRun: true, // Karma captures browsers, runs the tests and exits
+    concurrency: Infinity,
+    failOnEmptyTestSuite: true
   });
 };
