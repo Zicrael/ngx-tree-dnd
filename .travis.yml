@@ -16,3 +16,5 @@ script:
   - npm run test
 after_success:
   - codecov
+env:
+  CODECOV_TOKEN="3bca542c-6ada-4e15-bdca-804f851072b7"
