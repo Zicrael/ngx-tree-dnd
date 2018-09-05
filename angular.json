@@ -147,7 +147,8 @@
             "main": "projects/ngx-tree-dnd/src/test.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "projects/ngx-tree-dnd/tsconfig.spec.json",
-            "karmaConfig": "projects/ngx-tree-dnd/karma.conf.js"
+            "karmaConfig": "projects/ngx-tree-dnd/karma.conf.js",
+            "codeCoverage": true
           }
         },
         "lint": {
