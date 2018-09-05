@@ -2,7 +2,10 @@
 
 Angular 6 support tree with drag-and-drop sortable data tree. It`s fast and smart.
 
-[![Dependency Status](https://david-dm.org/zicrael/ngx-tree-dnd.svg)](https://david-dm.org/zicrael/ngx-tree-dnd)  [![Build status](https://api.travis-ci.org/Zicrael/ngx-tree-dnd.svg?branch=master)](https://travis-ci.org/Zicrael/ngx-tree-dnd) [![Known Vulnerabilities](https://snyk.io/test/github/zicrael/ngx-tree-dnd/badge.svg?targetFile=package.json)](https://snyk.io/test/github/zicrael/ngx-tree-dnd?targetFile=package.json) [![License MIT](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/zicrael/ngx-tree-dnd/blob/master/LICENSE)
+[![Dependency Status](https://david-dm.org/zicrael/ngx-tree-dnd.svg)](https://david-dm.org/zicrael/ngx-tree-dnd) [![Build status](https://api.travis-ci.org/Zicrael/ngx-tree-dnd.svg?branch=master)](https://travis-ci.org/Zicrael/ngx-tree-dnd) 
+[![codecov](https://codecov.io/gh/zicrael/ngx-tree-dnd/badge.svg)](https://codecov.io/gh/leovo2708/ngx-treeview)
+[![Known Vulnerabilities](https://snyk.io/test/github/zicrael/ngx-tree-dnd/badge.svg?targetFile=package.json)](https://snyk.io/test/github/zicrael/ngx-tree-dnd?targetFile=package.json)
+[![License MIT](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/zicrael/ngx-tree-dnd/blob/master/LICENSE)
 
 ## Installation
 New ngx-tree-dnd with draggable/sortable tree data, easy for use.
