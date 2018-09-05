@@ -24,7 +24,7 @@
             ],
             "styles": [
               "src/styles.css",
-              "dist/ngx-tree-dnd/lib/styles-tree-dnd.css"
+              "dist/ngx-tree-dnd/styles-tree-dnd.css"
             ],
             "scripts": []
           },

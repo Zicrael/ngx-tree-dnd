@@ -1,14 +1,14 @@
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([["styles"],{
 
-/***/ "./dist/ngx-tree-dnd/lib/styles-tree-dnd.css":
-/*!***************************************************!*\
-  !*** ./dist/ngx-tree-dnd/lib/styles-tree-dnd.css ***!
-  \***************************************************/
+/***/ "./dist/ngx-tree-dnd/styles-tree-dnd.css":
+/*!***********************************************!*\
+  !*** ./dist/ngx-tree-dnd/styles-tree-dnd.css ***!
+  \***********************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(/*! !../../../node_modules/raw-loader!../../../node_modules/postcss-loader/lib??embedded!./styles-tree-dnd.css */ "./node_modules/raw-loader/index.js!./node_modules/postcss-loader/lib/index.js??embedded!./dist/ngx-tree-dnd/lib/styles-tree-dnd.css");
+var content = __webpack_require__(/*! !../../node_modules/raw-loader!../../node_modules/postcss-loader/lib??embedded!./styles-tree-dnd.css */ "./node_modules/raw-loader/index.js!./node_modules/postcss-loader/lib/index.js??embedded!./dist/ngx-tree-dnd/styles-tree-dnd.css");
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -22,7 +22,7 @@ var options = {"hmr":true}
 options.transform = transform
 options.insertInto = undefined;
 
-var update = __webpack_require__(/*! ../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+var update = __webpack_require__(/*! ../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
 
 if(content.locals) module.exports = content.locals;
 
@@ -30,10 +30,10 @@ if(false) {}
 
 /***/ }),
 
-/***/ "./node_modules/raw-loader/index.js!./node_modules/postcss-loader/lib/index.js??embedded!./dist/ngx-tree-dnd/lib/styles-tree-dnd.css":
-/*!*************************************************************************************************************************!*\
-  !*** ./node_modules/raw-loader!./node_modules/postcss-loader/lib??embedded!./dist/ngx-tree-dnd/lib/styles-tree-dnd.css ***!
-  \*************************************************************************************************************************/
+/***/ "./node_modules/raw-loader/index.js!./node_modules/postcss-loader/lib/index.js??embedded!./dist/ngx-tree-dnd/styles-tree-dnd.css":
+/*!*********************************************************************************************************************!*\
+  !*** ./node_modules/raw-loader!./node_modules/postcss-loader/lib??embedded!./dist/ngx-tree-dnd/styles-tree-dnd.css ***!
+  \*********************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -574,14 +574,14 @@ if(false) {}
 /***/ }),
 
 /***/ 2:
-/*!**************************************************************************!*\
-  !*** multi ./src/styles.css ./dist/ngx-tree-dnd/lib/styles-tree-dnd.css ***!
-  \**************************************************************************/
+/*!**********************************************************************!*\
+  !*** multi ./src/styles.css ./dist/ngx-tree-dnd/styles-tree-dnd.css ***!
+  \**********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(/*! /Users/zicrael/Soft/Projects/ngx-tree-dnd/src/styles.css */"./src/styles.css");
-module.exports = __webpack_require__(/*! /Users/zicrael/Soft/Projects/ngx-tree-dnd/dist/ngx-tree-dnd/lib/styles-tree-dnd.css */"./dist/ngx-tree-dnd/lib/styles-tree-dnd.css");
+module.exports = __webpack_require__(/*! /Users/zicrael/Soft/Projects/ngx-tree-dnd/dist/ngx-tree-dnd/styles-tree-dnd.css */"./dist/ngx-tree-dnd/styles-tree-dnd.css");
 
 
 /***/ })
