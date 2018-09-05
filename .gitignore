@@ -25,6 +25,7 @@ Desktop.ini
 
 # Build files
 dist
+coverage
 ./gulpfile.js
 
 
