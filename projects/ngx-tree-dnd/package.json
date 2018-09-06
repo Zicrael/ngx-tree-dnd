@@ -18,10 +18,11 @@
   },
   "peerDependencies": {
     "@angular/common": "^6.0.0-rc.0 || ^6.0.0",
-    "@angular/core": "^6.0.0-rc.0 || ^6.0.0",
+    "@angular/core": "^6.0.0-rc.0 || ^6.0.0"
+  },
+  "dependencies": {
     "@fortawesome/angular-fontawesome": "^0.1.1",
     "@fortawesome/fontawesome-svg-core": "^1.2.0",
     "@fortawesome/free-solid-svg-icons": "^5.1.0"
-  },
-  "dependencies": {}
+  }
 }

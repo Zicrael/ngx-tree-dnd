@@ -3,5 +3,6 @@
   "dest": "../../dist/ngx-tree-dnd",
   "lib": {
     "entryFile": "src/public_api.ts"
-  }
+  },
+  "whitelistedNonPeerDependencies": ["@fortawesome/angular-fontawesome", "@fortawesome/fontawesome-svg-core", "@fortawesome/free-solid-svg-icons"]
 }

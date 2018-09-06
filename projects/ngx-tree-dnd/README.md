@@ -70,7 +70,7 @@ You need to import default styles for tree ( you can change them by rewrite clas
       "prefix": "app",
       "styles": [
         "styles.css",
-        "../node_modules/ngx-tree-dnd/styles-tree-dnd.css" 
+        "node_modules/ngx-tree-dnd/styles-tree-dnd.css" 
       ],
       "scripts": [],
       "environmentSource": "environments/environment.ts",
