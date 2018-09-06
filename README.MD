@@ -7,7 +7,7 @@ Angular 6 support tree with drag-and-drop sortable data tree. It`s fast and smar
 [![Known Vulnerabilities](https://snyk.io/test/github/zicrael/ngx-tree-dnd/badge.svg?targetFile=package.json)](https://snyk.io/test/github/zicrael/ngx-tree-dnd?targetFile=package.json)
 [![License MIT](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/zicrael/ngx-tree-dnd/blob/master/LICENSE)
 
-####Help the project and star it :3####
+#### Help the project and star it :3 ####
 
 ## Installation
 New ngx-tree-dnd with draggable/sortable tree data, easy for use.
