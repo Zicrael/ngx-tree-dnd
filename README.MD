@@ -24,7 +24,7 @@ $ npm install ngx-tree-dnd --save
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
-import { NgxTreeModule } from 'ngx-tree-dnd'; // here
+import { NgxTreeDndModule } from 'ngx-tree-dnd'; // here
 
 @NgModule({
   declarations: [
@@ -32,7 +32,7 @@ import { NgxTreeModule } from 'ngx-tree-dnd'; // here
   ],
   imports: [
     BrowserModule,
-    NgxTreeModule,   // add  NgxTreeModule to imports
+    NgxTreeDndModule,   // add  NgxTreeDndModule to imports
     LibraryModule 
   ],
   providers: [],
@@ -47,7 +47,7 @@ Once library is imported, you can use it`s components, directives and pipes in y
 <h1>
   {{title}}
 </h1>
-<ngx-tree-component [treeData]='myTree'></ngx-tree-component>
+<lib-ngx-tree-component [treeData]='youTree' [config]='config'></lib-ngx-tree-component>
 ```
 
 ## Styles
@@ -133,7 +133,7 @@ export interface TreeItemOptions {
 in you template file:
 
 ```xml
-<ngx-tree-component [treeData]='youTree'> </ngx-tree-component>
+<lib-ngx-tree-component [treeData]='youTree' ></lib-ngx-tree-component>
 ```
 
 in you component file:
@@ -167,7 +167,7 @@ Trigger start of dragging element
 in you template file:
 
 ```xml
-<ngx-tree-component [treeData]='youTree' (ondragstart)='onDragStart($event)'> </ngx-tree-component>
+<lib-ngx-tree-component [treeData]='youTree' (ondragstart)='onDragStart($event)'> </lib-ngx-tree-component>
 ```
 in you component file:
 
@@ -185,7 +185,7 @@ Trigger if draggable element enter to drop zone.
 in you template file:
 
 ```xml
-<ngx-tree-component [treeData]='youTree' (ondragenter)='onDragEnter($event)'> </ngx-tree-component>
+<lib-ngx-tree-component [treeData]='youTree' (ondragenter)='onDragEnter($event)'> </lib-ngx-tree-component>
 ```
 in you component file:
 
@@ -203,7 +203,7 @@ Trigger if draggable element enter to drop zone.
 in you template file:
 
 ```xml
-<ngx-tree-component [treeData]='youTree' (ondragleave)='onDragLeave($event)'> </ngx-tree-component>
+<lib-ngx-tree-component [treeData]='youTree' (ondragleave)='onDragLeave($event)'> </lib-ngx-tree-component>
 ```
 in you component file:
 
@@ -220,7 +220,7 @@ Trigger end of drag event
 in you template file:
 
 ```xml
-<ngx-tree-component [treeData]='youTree' (ondragend)='onDragEnd($event)'> </ngx-tree-component>
+<lib-ngx-tree-component [treeData]='youTree' (ondragend)='onDragEnd($event)'> </lib-ngx-tree-component>
 ```
 in you component file:
 
@@ -238,7 +238,7 @@ Trigger start of dragging element
 in you template file:
 
 ```xml
-<ngx-tree-component [treeData]='youTree' (onallowdrop)='onAllowDrop($event)'> </ngx-tree-component>
+<lib-ngx-tree-component [treeData]='youTree' (onallowdrop)='onAllowDrop($event)'> </lib-ngx-tree-component>
 ```
 in you component file:
 
@@ -255,7 +255,7 @@ Trigger start of dragging element
 in you template file:
 
 ```xml
-<ngx-tree-component [treeData]='youTree' (ondrop)='onDrop($event)'> </ngx-tree-component>
+<lib-ngx-tree-component [treeData]='youTree' (ondrop)='onDrop($event)'> </lib-ngx-tree-component>
 ```
 in you component file:
 
@@ -273,7 +273,7 @@ Trigger start of dragging element
 in you template file:
 
 ```xml
-<ngx-tree-component [treeData]='youTree' (onadditem)='onAddItem($event)'> </ngx-tree-component>
+<lib-ngx-tree-component [treeData]='youTree' (onadditem)='onAddItem($event)'> </lib-ngx-tree-component>
 ```
 in you component file:
 
@@ -291,7 +291,7 @@ Trigger start of dragging element
 in you template file:
 
 ```xml
-<ngx-tree-component [treeData]='youTree' (onrenameitem)='onRenameItem($event)'> </ngx-tree-component>
+<lib-ngx-tree-component [treeData]='youTree' (onrenameitem)='onRenameItem($event)'> </lib-ngx-tree-component>
 ```
 in you component file:
 
@@ -309,7 +309,7 @@ Trigger start of dragging element
 in you template file:
 
 ```xml
-<ngx-tree-component [treeData]='youTree' (onremoveitem)='onRemoveItem($event)'> </ngx-tree-component>
+<lib-ngx-tree-component [treeData]='youTree' (onremoveitem)='onRemoveItem($event)'> </lib-ngx-tree-component>
 ```
 in you component file:
 
@@ -328,7 +328,7 @@ You can enable/disable and set some elements on tree by write simple config:
 in you template file:
 
 ```xml
-<ngx-tree-component [treeData]='youTree' [config]='config'> </ngx-tree-component>
+<lib-ngx-tree-component [treeData]='youTree' [config]='config'> </lib-ngx-tree-component>
 ```
 in you component file:
 
