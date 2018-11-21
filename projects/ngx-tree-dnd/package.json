@@ -1,6 +1,6 @@
 {
   "name": "ngx-tree-dnd",
-  "version": "2.2.5",
+  "version": "2.3.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/Zicrael/ngx-tree-dnd"
@@ -17,12 +17,12 @@
     "url": "https://github.com/Zicrael/ngx-tree-dnd/issues"
   },
   "peerDependencies": {
-    "@angular/common": "^6.1.9 || ^6.0.0",
-    "@angular/core": "^6.1.9 || ^6.0.0"
+    "@angular/common": "^7.0.4",
+    "@angular/core": "^7.0.4"
   },
   "dependencies": {
-    "@fortawesome/angular-fontawesome": "^0.2.0",
-    "@fortawesome/fontawesome-svg-core": "^1.2.4",
-    "@fortawesome/free-solid-svg-icons": "^5.3.1"
+    "@fortawesome/angular-fontawesome": "^0.2.1",
+    "@fortawesome/fontawesome-svg-core": "^1.2.8",
+    "@fortawesome/free-solid-svg-icons": "^5.5.0"
   }
 }
