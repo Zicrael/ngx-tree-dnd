@@ -1,6 +1,6 @@
 {
   "name": "ngx-tree-dnd",
-  "version": "2.3.0",
+  "version": "2.3.1",
   "repository": {
     "type": "git",
     "url": "https://github.com/Zicrael/ngx-tree-dnd"
@@ -10,7 +10,17 @@
     "email": "13ccdd@gmail.com"
   },
   "keywords": [
-    "angular , angular-tree, angular-tree-dnd, anuglar-sortable-dnd, tree-view, tree-component, data-tree, ngx-tree-dnd, ngx-sortable-dnd, ngx-sortable-tree"
+    "angular" ,
+    "angular-tree",
+    "angular-tree-dnd",
+    "anuglar-sortable-dnd",
+    "tree-view",
+    "tree-component",
+    "tree-links",
+    "data-tree",
+    "ngx-tree-dnd",
+    "ngx-sortable-dnd",
+    "ngx-sortable-tree"
   ],
   "license": "MIT",
   "bugs": {
