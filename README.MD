@@ -1,6 +1,6 @@
 # ngx-tree-dnd  [![npm version](https://badge.fury.io/js/ngx-tree-dnd.svg)](https://badge.fury.io/js/ngx-tree-dnd) [![npm downloads](https://img.shields.io/npm/dt/ngx-tree-dnd.svg)](https://www.npmjs.com/package/ngx-tree-dnd)
 
-Angular 6 support tree with drag-and-drop sortable data tree. It`s fast and smart.
+Angular 7 support tree with drag-and-drop sortable data tree. It`s fast and smart.
 
 [![Dependency Status](https://david-dm.org/zicrael/ngx-tree-dnd.svg)](https://david-dm.org/zicrael/ngx-tree-dnd) [![Build status](https://api.travis-ci.org/Zicrael/ngx-tree-dnd.svg?branch=master)](https://travis-ci.org/Zicrael/ngx-tree-dnd) 
 [![codecov](https://codecov.io/gh/zicrael/ngx-tree-dnd/badge.svg)](https://codecov.io/gh/zicrael/ngx-tree-dnd)

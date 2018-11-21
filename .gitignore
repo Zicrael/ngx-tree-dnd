@@ -1,5 +1,6 @@
 # Node
 node_modules/*
+projects/ngx-tree-dnd/node_modules
 npm-debug.log
 
 # JetBrains
