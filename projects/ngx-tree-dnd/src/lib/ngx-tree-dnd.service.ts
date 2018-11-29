@@ -116,10 +116,10 @@ export class NgxTreeService {
       element: createObj,
       parentList: this.selectedElement
     };
+    this.onAddItem.next(eventEmit);
     this.elementFinder(this.treeStorage, parent.id);
     this.selectedElement.childrens.push(createObj);
     this.clearAction();
-    this.onAddItem.next(eventEmit);
   }
 
   /*
@@ -128,16 +128,16 @@ export class NgxTreeService {
    Emit onRemoveItem Subject.
   */
   public deleteItem(id) {
+    this.elementFinder(this.treeStorage, id);
     const eventEmit = {
       element: this.selectedElement,
       parentList: this.listOfSelectedElement
     };
-    this.elementFinder(this.treeStorage, id);
+    this.onRemoveItem.next(eventEmit);
     const i = this.listOfSelectedElement.indexOf(this.selectedElement);
     this.listOfSelectedElement.splice(i, 1);
     this.clearAction();
     this.checkTreeLength();
-    this.onRemoveItem.next(eventEmit);
   }
 
   /*
@@ -152,11 +152,11 @@ export class NgxTreeService {
       element: this.selectedElement,
       parentList: this.listOfSelectedElement
     };
+    this.onRenameItem.next(eventEmit);
     // code
     this.selectedElement.name = name;
     this.selectedElement.options.edit = false;
     this.clearAction();
-    this.onRenameItem.next(eventEmit);
   }
 
   /*

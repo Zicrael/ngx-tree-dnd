@@ -6,6 +6,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+  constructor() {}
   config = {
     showActionButtons: true,
     showAddButtons: true,
@@ -72,6 +73,14 @@ export class AppComponent {
   ];
 
   onDrop(event) {
+    console.log(this.myTree);
+    console.log(event);
+  }
+  onDelete(event) {
+    console.log(this.myTree);
+    console.log(event);
+  }
+  onadditem(event) {
     console.log(this.myTree);
     console.log(event);
   }
