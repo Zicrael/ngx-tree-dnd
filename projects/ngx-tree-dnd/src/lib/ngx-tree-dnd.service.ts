@@ -28,6 +28,8 @@ export class NgxTreeService {
   onDragEnd = new Subject<any>();
   onAddItem = new Subject<any>();
   onRenameItem = new Subject<any>();
+  onStartRenameItem = new Subject<any>();
+  onFinishRenameItem = new Subject<any>();
   onRemoveItem = new Subject<any>();
   config = new BehaviorSubject<any>(null);
   defaulConfig: TreeConfig;
@@ -141,18 +143,33 @@ export class NgxTreeService {
   }
 
   /*
+   Trigger start rename element.
+   It`s accepts 'name' and 'id' for find item on tree and set the name.
+   Emit onRenameItem Subject.
+  */
+ public startRenameItem(element) {
+    this.elementFinder(this.treeStorage, element.id);
+    // event emit
+    const eventEmit = {
+      element: this.selectedElement,
+      parentList: this.listOfSelectedElement
+    };
+    this.onStartRenameItem.next(eventEmit);
+  }
+
+  /*
    Rename element.
    It`s accepts 'name' and 'id' for find item on tree and set the name.
    Emit onRenameItem Subject.
   */
-  public renameItem(name, id) {
+  public finishRenameItem(name, id) {
     this.elementFinder(this.treeStorage, id);
     // event emit
     const eventEmit = {
       element: this.selectedElement,
       parentList: this.listOfSelectedElement
     };
-    this.onRenameItem.next(eventEmit);
+    this.onFinishRenameItem.next(eventEmit);
     // code
     this.selectedElement.name = name;
     this.selectedElement.options.edit = false;

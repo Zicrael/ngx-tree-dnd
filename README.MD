@@ -231,7 +231,7 @@ in you component file:
 ```
 
 ### onallowdrop()
-Trigger start of dragging element
+Trigger enter on drop zone
 
 #### example 
 
@@ -248,7 +248,7 @@ in you component file:
   }
 ```
 ### ondrop()
-Trigger start of dragging element
+Trigger drop item action
 
 #### example 
 
@@ -266,7 +266,7 @@ in you component file:
 ```
 
 ### onadditem()
-Trigger start of dragging element
+Trigger add new item action
 
 #### example 
 
@@ -283,26 +283,42 @@ in you component file:
   }
 ```
 
-### onrenameitem()
-Trigger start of dragging element
-
+### onStartRenameItem()
+Trigger start renaming item
 #### example 
 
 in you template file:
 
 ```xml
-<lib-ngx-tree-component [treeData]='youTree' (onrenameitem)='onRenameItem($event)'> </lib-ngx-tree-component>
+<lib-ngx-tree-component [treeData]='youTree' (onStartRenameItem)='onStartRenameItem($event)'> </lib-ngx-tree-component>
 ```
 in you component file:
 
 ```typescript
-    onRenameItem(event) {
+  onStartRenameItem(event) {
+    console.log(event);
+  }
+```
+
+### onFinishRenameItem()
+Trigger finish renaming item after validation
+#### example 
+
+in you template file:
+
+```xml
+<lib-ngx-tree-component [treeData]='youTree' (onStartRenameItem)='onFinishRenameItem($event)'> </lib-ngx-tree-component>
+```
+in you component file:
+
+```typescript
+  onFinishRenameItem(event) {
     console.log(event);
   }
 ```
 
 ### onremoveitem()
-Trigger start of dragging element
+Trigger removing action item
 
 #### example 
 

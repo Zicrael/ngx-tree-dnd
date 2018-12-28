@@ -96,6 +96,16 @@ export class NgxTreeChildrenComponent implements AfterViewInit {
   }
 
   /*
+    Event: onStartRenameItem;
+    Enable rename mode in element
+    Call onStartRenameItem() from tree service.
+  */
+  enableRenameMode(element) {
+    element.options.edit = true;
+    this.treeService.startRenameItem(element);
+  }
+
+  /*
     Event: onadditem;
     Generate id by new Date() by 'full year + day + time'.
     Call addNewItem() from tree service.
@@ -108,14 +118,14 @@ export class NgxTreeChildrenComponent implements AfterViewInit {
   }
 
   /*
-    Event: onrenameitem;
+    Event: onFinishRenameItem;
     Check is form valid.
     Call addNewItem() from tree service.
   */
-  submitRename( item ) {
+  submitRename(item) {
     if (this.renameForm.valid) {
       this.showError = false;
-      this.treeService.renameItem(this.renameForm.value.name, item.id);
+      this.treeService.finishRenameItem(this.renameForm.value.name, item.id);
       this.element.options.edit = false;
     } else {
       this.showError = true;
