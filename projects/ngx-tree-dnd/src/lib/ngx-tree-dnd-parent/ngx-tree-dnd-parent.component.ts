@@ -35,7 +35,8 @@ export class NgxTreeParentComponent implements AfterViewInit {
   @Output() onallowdrop: EventEmitter<any> = new EventEmitter();
   @Output() ondragend: EventEmitter<any> = new EventEmitter();
   @Output() onadditem: EventEmitter<any> = new EventEmitter();
-  @Output() onrenameitem: EventEmitter<any> = new EventEmitter();
+  @Output() onStartRenameItem: EventEmitter<any> = new EventEmitter();
+  @Output() onFinishRenameItem: EventEmitter<any> = new EventEmitter();
   @Output() onremoveitem: EventEmitter<any> = new EventEmitter();
 
   @Input()
@@ -101,9 +102,14 @@ export class NgxTreeParentComponent implements AfterViewInit {
         this.onadditem.emit(event);
       }
     );
-    this.treeService.onRenameItem.subscribe(
+    this.treeService.onStartRenameItem.subscribe(
       (event) => {
-        this.onrenameitem.emit(event);
+        this.onStartRenameItem.emit(event);
+      }
+    );
+    this.treeService.onFinishRenameItem.subscribe(
+      (event) => {
+        this.onFinishRenameItem.emit(event);
       }
     );
     this.treeService.onRemoveItem.subscribe(

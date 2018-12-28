@@ -19,7 +19,7 @@
             </button>
           </div>
           <div class='d-flex'>
-            <button class="tree-btn edit-btn" *ngIf="config.showRenameButtons" (click)="element.options.edit = true">
+            <button class="tree-btn edit-btn" *ngIf="config.showRenameButtons" (click)="enableRenameMode(element)">
               <fa-icon icon="edit" [style.font-size.px]='config.setIconSize'></fa-icon>
             </button>
           </div>
