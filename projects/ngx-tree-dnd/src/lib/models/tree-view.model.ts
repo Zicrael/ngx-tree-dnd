@@ -51,3 +51,7 @@ export interface TreeConfig {
     setFontSize?: number;
     setIconSize?: number;
 }
+
+export interface FindingResults {
+    findedItem: TreeModel, itemsList: TreeModel[], parentItem?: TreeModel
+}

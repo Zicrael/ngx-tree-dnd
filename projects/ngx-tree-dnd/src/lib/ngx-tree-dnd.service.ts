@@ -5,16 +5,17 @@
  */
 import { Injectable } from '@angular/core';
 import { Subject, BehaviorSubject, Observable } from 'rxjs';
-import { TreeModel, TreeConfig } from './models/tree-view.model';
+import { TreeModel, TreeConfig, FindingResults } from './models/tree-view.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class NgxTreeService {
   treeStorage: TreeModel[] = [];
-  listOfSelectedElement: TreeModel[];
-  parentOfSelected: TreeModel;
-  private selectedElement: TreeModel;
+  private findingResults: FindingResults;
+  // listOfSelectedElement: TreeModel[];
+  // parentOfSelected: TreeModel;
+  // private selectedElement: TreeModel;
   isDragging: TreeModel;
   dragEvent: {};
   direction: string;
@@ -78,10 +79,12 @@ export class NgxTreeService {
    private elementFinder(list, id, parent?) {
     for (const item of list ) {
       if (item.id === id) {
-        this.selectedElement = item; // finded element by id
-        this.listOfSelectedElement = list;
+        this.findingResults = {
+          findedItem: item,
+          itemsList: list
+        }
         if (parent) {
-          this.parentOfSelected = item;
+          this.findingResults.parentItem = parent;
         }
         break;
       } else {
@@ -114,13 +117,13 @@ export class NgxTreeService {
       },
       childrens: []
     };
+    this.elementFinder(this.treeStorage, parent.id);
+    this.findingResults.findedItem.childrens.push(createObj);
     const eventEmit = {
       element: createObj,
-      parentList: this.selectedElement
+      parent: this.findingResults.findedItem || 'root'
     };
     this.onAddItem.next(eventEmit);
-    this.elementFinder(this.treeStorage, parent.id);
-    this.selectedElement.childrens.push(createObj);
     this.clearAction();
   }
 
@@ -132,12 +135,12 @@ export class NgxTreeService {
   public deleteItem(id) {
     this.elementFinder(this.treeStorage, id);
     const eventEmit = {
-      element: this.selectedElement,
-      parentList: this.listOfSelectedElement
+      element: this.findingResults.findedItem,
+      parent: this.findingResults.parentItem || 'root'
     };
     this.onRemoveItem.next(eventEmit);
-    const i = this.listOfSelectedElement.indexOf(this.selectedElement);
-    this.listOfSelectedElement.splice(i, 1);
+    const i = this.findingResults.itemsList.indexOf(this.findingResults.findedItem);
+    this.findingResults.itemsList.splice(i, 1);
     this.clearAction();
     this.checkTreeLength();
   }
@@ -151,8 +154,8 @@ export class NgxTreeService {
     this.elementFinder(this.treeStorage, element.id);
     // event emit
     const eventEmit = {
-      element: this.selectedElement,
-      parentList: this.listOfSelectedElement
+      element: this.findingResults.findedItem,
+      parent: this.findingResults.parentItem || 'root'
     };
     this.onStartRenameItem.next(eventEmit);
   }
@@ -164,15 +167,15 @@ export class NgxTreeService {
   */
   public finishRenameItem(name, id) {
     this.elementFinder(this.treeStorage, id);
+    // code
+    this.findingResults.findedItem.name = name;
+    this.findingResults.findedItem.options.edit = false;
     // event emit
     const eventEmit = {
-      element: this.selectedElement,
-      parentList: this.listOfSelectedElement
+      element: this.findingResults.findedItem,
+      parent: this.findingResults.parentItem || 'root'
     };
     this.onFinishRenameItem.next(eventEmit);
-    // code
-    this.selectedElement.name = name;
-    this.selectedElement.options.edit = false;
     this.clearAction();
   }
 
@@ -258,12 +261,12 @@ export class NgxTreeService {
     } else {
       const dropZoneId = parseInt(eventObj.event.target.getAttribute('data-id'), null);
       this.elementFinder(this.treeStorage, this.isDragging.id);
-      const i = this.listOfSelectedElement.indexOf(this.selectedElement);
-      const copyItem = this.listOfSelectedElement.splice(i, 1)[0];
+      const i = this.findingResults.itemsList.indexOf(this.findingResults.findedItem);
+      const copyItem = this.findingResults.itemsList.splice(i, 1)[0];
       this.elementFinder(this.treeStorage, dropZoneId);
-      this.selectedElement.childrens.push(copyItem);
+      this.findingResults.findedItem.childrens.push(copyItem);
       this.sortTree();
-      eventObj.target = this.selectedElement;
+      eventObj.target = this.findingResults.findedItem;
       this.onDrop.next(eventObj);
     }
     this.removeDestenationBorders(this.treeStorage);
@@ -281,27 +284,27 @@ export class NgxTreeService {
   private changeItemPosition(el, direction) {
     setTimeout( () => {
       this.elementFinder(this.treeStorage, this.isDragging.id);
-      const i = this.listOfSelectedElement.indexOf(this.selectedElement);
-      const copyItem = this.listOfSelectedElement.splice(i, 1)[0];
+      const i = this.findingResults.itemsList.indexOf(this.findingResults.findedItem);
+      const copyItem = this.findingResults.itemsList.splice(i, 1)[0];
       // end test
       const positionTarget = el.options.position;
       this.elementFinder(this.treeStorage, el.id);
       if (direction === 'up') {
-        for (const items of this.listOfSelectedElement) {
+        for (const items of this.findingResults.itemsList) {
           if ( items.options.position >= positionTarget ) {
             items.options.position = items.options.position + 1;
             copyItem.options.position = positionTarget;
           }
         }
       } else {
-        for (const items of this.listOfSelectedElement) {
+        for (const items of this.findingResults.itemsList) {
           if ( items.options.position <=  positionTarget ) {
             items.options.position = items.options.position - 1;
           }
         }
       }
       copyItem.options.position = positionTarget;
-      this.listOfSelectedElement.push(copyItem);
+      this.findingResults.itemsList.push(copyItem);
       this.sortTree();
     });
   }
@@ -309,7 +312,7 @@ export class NgxTreeService {
   // get position of item
   getItemPosition(item) {
     this.elementFinder(this.treeStorage, item.id);
-    let position = this.listOfSelectedElement.indexOf(this.selectedElement);
+    let position = this.findingResults.itemsList.indexOf(this.findingResults.findedItem);
     return ++position;
   }
 
@@ -341,8 +344,7 @@ export class NgxTreeService {
 
   // clear selectedElement && isDragging from element finder.
   private clearAction() {
-    this.selectedElement = null;
-    this.listOfSelectedElement = null;
+    this.findingResults = null;
   }
 
   private removeDestenationBorders(data) {
