@@ -73,13 +73,25 @@ export class AppComponent {
   ];
 
   onDrop(event) {
+    console.log(this.myTree);
+    console.log(event);
   }
   onDelete(event) {
+    console.log(this.myTree);
+    console.log(event);
   }
   onadditem(event) {
+    console.log(this.myTree);
+    console.log(event);
   }
   onStartRenameItem(event) {
+    console.log('start rename');
+    console.log(this.myTree);
+    console.log(event);
   }
   onFinishRenameItem(event) {
+    console.log('finish rename');
+    console.log(this.myTree);
+    console.log(event);
   }
 }
