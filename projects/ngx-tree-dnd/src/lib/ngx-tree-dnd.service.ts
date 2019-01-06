@@ -71,39 +71,56 @@ export class NgxTreeService {
     return data;
   }
 
+/**
+ * Flatten the tree into a list collection
+ * @param tree 
+ * @param key 
+ * @param collection 
+ */
+  private bfs (tree, key, collection) {
+    if (!tree[key] || tree[key].length === 0) return;
+    for (var i = 0; i < tree[key].length; i++) {
+      var child = tree[key][i]
+      collection[child.id] = child;
+      this.bfs(child, key, collection);
+    }
+    return;
+  }
+
   /*
    Element finder, it`s find element by id in tree.
    Returns: finded element, parent array.
-   Watch out, this is recoursive method.
+   Watch out, this is recursive method.
   */
    private elementFinder(list, id, parent?) {
-    for (const item of list ) {
-      if (item.id === id) {
-        this.findingResults = {
-          findedItem: item,
-          itemsList: list
-        }
-        if (parent) {
-          this.findingResults.parentItem = parent;
-        }
-        break;
-      } else {
-        if (item.childrens.length > 0 ) {
-          this.elementFinder(item.childrens, id, item); // recoursive call
-        }
-      }
-    }
+     for (const item of list) {
+       if (item.id === id) {
+         this.findingResults = {
+           foundItem: item,
+           itemsList: list
+         }
+         if (parent) {
+           this.findingResults.parentItem = parent;
+         }
+         break;
+       } else {
+         if (item.childrens.length > 0) {
+           this.elementFinder(item.childrens, id, item);
+         }
+       }
+     }
+
   }
 
 
    /*
    Add new item to tree.
-   It`s accepts 'type' for detect add root element or children.
+   Its accepts 'type' for detect add root element or children.
    Emit onAddItem Subject.
   */
   public addNewItem(id, name, parent?) {
     let pos = 1;
-    if (parent.childrens.length !== 0) {
+    if (parent && parent.childrens.length !== 0) {
       const parentPrevChildren = parent.childrens.length - 1;
       const newItemPosition = parent.childrens[parentPrevChildren].options.position + 1;
       pos = newItemPosition;
@@ -117,12 +134,20 @@ export class NgxTreeService {
       },
       childrens: []
     };
-    this.elementFinder(this.treeStorage, parent.id);
-    this.findingResults.findedItem.childrens.push(createObj);
+    
+    if(parent != null) {
+      this.elementFinder(this.treeStorage, parent ? parent.id : null);
+      this.findingResults && this.findingResults.foundItem.childrens.push(createObj);
+    }
+    else{
+      this.treeStorage.push(createObj);
+    }
+    
     const eventEmit = {
       element: createObj,
-      parent: this.findingResults.findedItem || 'root'
+      parent: parent ? this.findingResults.foundItem : 'root'
     };
+
     this.onAddItem.next(eventEmit);
     this.clearAction();
   }
@@ -135,11 +160,11 @@ export class NgxTreeService {
   public deleteItem(id) {
     this.elementFinder(this.treeStorage, id);
     const eventEmit = {
-      element: this.findingResults.findedItem,
+      element: this.findingResults.foundItem,
       parent: this.findingResults.parentItem || 'root'
     };
     this.onRemoveItem.next(eventEmit);
-    const i = this.findingResults.itemsList.indexOf(this.findingResults.findedItem);
+    const i = this.findingResults.itemsList.indexOf(this.findingResults.foundItem);
     this.findingResults.itemsList.splice(i, 1);
     this.clearAction();
     this.checkTreeLength();
@@ -154,7 +179,7 @@ export class NgxTreeService {
     this.elementFinder(this.treeStorage, element.id);
     // event emit
     const eventEmit = {
-      element: this.findingResults.findedItem,
+      element: this.findingResults.foundItem,
       parent: this.findingResults.parentItem || 'root'
     };
     this.onStartRenameItem.next(eventEmit);
@@ -168,11 +193,11 @@ export class NgxTreeService {
   public finishRenameItem(name, id) {
     this.elementFinder(this.treeStorage, id);
     // code
-    this.findingResults.findedItem.name = name;
-    this.findingResults.findedItem.options.edit = false;
+    this.findingResults.foundItem.name = name;
+    this.findingResults.foundItem.options.edit = false;
     // event emit
     const eventEmit = {
-      element: this.findingResults.findedItem,
+      element: this.findingResults.foundItem,
       parent: this.findingResults.parentItem || 'root'
     };
     this.onFinishRenameItem.next(eventEmit);
@@ -261,12 +286,12 @@ export class NgxTreeService {
     } else {
       const dropZoneId = parseInt(eventObj.event.target.getAttribute('data-id'), null);
       this.elementFinder(this.treeStorage, this.isDragging.id);
-      const i = this.findingResults.itemsList.indexOf(this.findingResults.findedItem);
+      const i = this.findingResults.itemsList.indexOf(this.findingResults.foundItem);
       const copyItem = this.findingResults.itemsList.splice(i, 1)[0];
       this.elementFinder(this.treeStorage, dropZoneId);
-      this.findingResults.findedItem.childrens.push(copyItem);
-      this.sortTree();
-      eventObj.target = this.findingResults.findedItem;
+      this.findingResults.foundItem.childrens.push(copyItem);
+      // this.sortTree();
+      eventObj.target = this.findingResults.foundItem;
       this.onDrop.next(eventObj);
     }
     this.removeDestenationBorders(this.treeStorage);
@@ -284,7 +309,7 @@ export class NgxTreeService {
   private changeItemPosition(el, direction) {
     setTimeout( () => {
       this.elementFinder(this.treeStorage, this.isDragging.id);
-      const i = this.findingResults.itemsList.indexOf(this.findingResults.findedItem);
+      const i = this.findingResults.itemsList.indexOf(this.findingResults.foundItem);
       const copyItem = this.findingResults.itemsList.splice(i, 1)[0];
       // end test
       const positionTarget = el.options.position;
@@ -312,7 +337,7 @@ export class NgxTreeService {
   // get position of item
   getItemPosition(item) {
     this.elementFinder(this.treeStorage, item.id);
-    let position = this.findingResults.itemsList.indexOf(this.findingResults.findedItem);
+    let position = this.findingResults.itemsList.indexOf(this.findingResults.foundItem);
     return ++position;
   }
 
