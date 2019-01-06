@@ -448,10 +448,6 @@ in you component file:
 
 ### Thank you for use my plug-in! Subscribe for more plugins! :)  
 
-[![support on patreon](https://maggiederrick.files.wordpress.com/2017/12/patreon.png)](https://www.patreon.com/zicrael)
-
-Twitch: https://www.twitch.tv/zicrael
-
 Made with love by Zicrael(Yaroslav Kikot) ^^
 
 ## License
