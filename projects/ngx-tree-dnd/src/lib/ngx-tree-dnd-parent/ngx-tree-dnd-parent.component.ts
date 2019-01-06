@@ -1,3 +1,4 @@
+import { FormBuilder, Validators } from '@angular/forms';
 /*
  Copyright (C) 2018 Yaroslav Kikot
  This project is licensed under the terms of the MIT license.
@@ -22,12 +23,17 @@ export class NgxTreeParentComponent implements AfterViewInit {
       enableExpandButtons: true,
       enableDragging: true,
       rootTitle: 'Root',
+      options: {
+        edit: false
+      },
       validationText: 'Enter valid name',
       minCharacterLength: 1,
       setItemsAsLinks: false,
       setFontSize: 16,
       setIconSize: 14
     };
+  showError: boolean;
+  renameForm;
   @Output() ondragstart: EventEmitter<any> = new EventEmitter();
   @Output() ondragenter: EventEmitter<any> = new EventEmitter();
   @Output() ondragleave: EventEmitter<any> = new EventEmitter();
@@ -60,8 +66,9 @@ export class NgxTreeParentComponent implements AfterViewInit {
       this.getTreeData(item);
   }
 
-  constructor(public treeService: NgxTreeService ) {
+  constructor(public treeService: NgxTreeService, private fb: FormBuilder ) {
     this.enableSubscribers();
+    this.createForm();
   }
 
   // set user config
@@ -69,6 +76,9 @@ export class NgxTreeParentComponent implements AfterViewInit {
     for (const key of Object.keys(config)) {
       this.setValue(key, config);
     }
+    this.renameForm.patchValue({
+      name: this.userConfig.rootTitle
+    });
   }
   // set value to keys of config
   setValue(item, config) {
@@ -143,5 +153,37 @@ export class NgxTreeParentComponent implements AfterViewInit {
     );
   }
 
+  // create edit form
+  createForm() {
+    this.renameForm = this.fb.group({
+      name: [this.userConfig.rootTitle || '', [
+        Validators.required,
+        Validators.minLength(this.userConfig.minCharacterLength)
+      ]],
+    });
+  }
+
+  enableRootRenameMode() {
+    this.userConfig.options.edit = true;
+  }
+
+  submitAdd(name) {
+    const d = `${new Date().getFullYear()}${new Date().getDay()}${new Date().getTime()}`;
+    const elemId = parseInt(d, null);
+    this.treeService.addNewItem(elemId, name, null);
+  }
+
+  submitRootRename() {
+    if (this.renameForm.valid) {
+      this.showError = false;
+      this.userConfig.rootTitle = this.renameForm.value.name;
+      this.userConfig.options.edit = false;
+    } else {
+      this.showError = true;
+    }
+  }
+
   ngAfterViewInit() {}
+
+
 }

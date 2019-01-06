@@ -43,6 +43,7 @@ export interface TreeConfig {
     // actions
     enableDragging?: boolean;
     rootTitle?: string;
+    options?: TreeItemOptions;
     // validation
     validationText?: string;
     minCharacterLength?: number;
@@ -53,5 +54,5 @@ export interface TreeConfig {
 }
 
 export interface FindingResults {
-    findedItem: TreeModel, itemsList: TreeModel[], parentItem?: TreeModel
+    foundItem: TreeModel, itemsList: TreeModel[], parentItem?: TreeModel
 }
