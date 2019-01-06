@@ -1,6 +1,6 @@
 <div id='threeWrapper' *ngIf="treeView" [style.font-size.px]='userConfig.setFontSize'>
     <div class='root-title d-inline-flex pos-relative' *ngIf="!userConfig.options.edit;else onEdit">
-      <div>
+      <div class='root-text'>
         {{userConfig.rootTitle}}
       </div>
       
@@ -18,7 +18,7 @@
       </div>
     </div>
     <ng-template #onEdit>
-      <div class='tree-title d-inline-flex'>
+      <div class='d-inline-flex'>
         <form [formGroup]="renameForm" class='d-flex' (submit)='submitRootRename()'>
           <input type="text" class='input-rename' formControlName="name" libAutoFocus="true" [style.font-size.px]='userConfig.setFontSize'>
         </form>

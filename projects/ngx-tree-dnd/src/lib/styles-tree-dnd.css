@@ -5,6 +5,12 @@
  */
 
 /* Tree main styles */
+.root-title {
+    padding-bottom: 5px;
+}
+.root-text {
+    margin-right: 5px;
+}
 .tree-child {
     user-select: none;
     width: fit-content;
