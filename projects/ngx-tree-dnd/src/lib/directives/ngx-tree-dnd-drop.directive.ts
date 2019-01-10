@@ -42,7 +42,6 @@ export class DropElementsDirective {
         Call onDragOver() from tree service.
         Emit onAllowDrop on tree service.
     */
-    // @HostListener('dragover', ['$event'])
     onDragOver(event: Event) {
         const eventObj = {
             event,
@@ -56,7 +55,6 @@ export class DropElementsDirective {
         Call onDropItem() from tree service.
         Emit OnDrop on tree service.
     */
-    // @HostListener('drop', ['$event'])
     onDrop(event: Event) {
         const dragItem = this.treeService.isDragging;
         const eventObj = {
@@ -77,7 +75,6 @@ export class DropElementsDirective {
     Call enterDropZone() from tree service.
     Emit onDragEnter.
     */
-    // @HostListener('dragenter', ['$event'])
     onDragEnter(event: Event) {
         const eventObj = {
         event,
@@ -92,7 +89,6 @@ export class DropElementsDirective {
         Call leaveDropZone() from tree service.
         Emit onDragLeave.
     */
-    // @HostListener('dragleave', ['$event'])
     onDragLeave(event: Event) {
         // emit events
         const eventObj = {

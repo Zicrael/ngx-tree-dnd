@@ -43,7 +43,6 @@ export class DragElementsDirective {
         Set item as dragging and call startDragging() from tree service.
         Emit OnDragStart on tree service.
     */
-    // @HostListener('dragstart', ['$event'])
     onDragStart(event: Event) {
       const eventObj = {
         event,
@@ -63,7 +62,6 @@ export class DragElementsDirective {
         trigger drag items and call onDragProcess() from tree service.
         Emit OnDrag on tree service.
     */
-    // @HostListener('drag', ['$event'])
     onDrag(event: Event) {
       const eventObj = {
         event,
@@ -77,7 +75,6 @@ export class DragElementsDirective {
         Call dragEndAction() from tree service.
         Emit OnDragEnd on tree service.
     */
-    // @HostListener('dragend', ['$event'])
     onDragEnd(event: Event) {
       const eventObj = {
         event,
