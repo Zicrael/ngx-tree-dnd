@@ -1,3 +1,4 @@
+import { ChangeDetectionStrategy } from '@angular/core';
 /*
  Copyright (C) 2018 Yaroslav Kikot
  This project is licensed under the terms of the MIT license.
