@@ -13,11 +13,7 @@ export class AutoFocusDirective implements OnInit {
     constructor(private el: ElementRef) {}
 
     ngOnInit() {
-        if (this.focus) {
-            window.setTimeout(() => {
-                this.el.nativeElement.focus();
-            });
-        }
+        this.focus && this.el.nativeElement.focus();
     }
 
     @Input() set autofocus(condition: boolean) {
