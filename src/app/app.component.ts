@@ -72,6 +72,10 @@ export class AppComponent {
     }
   ];
 
+  ngDoCheck() {
+    console.log('change');
+  }
+
   onDrop(event) {
     console.log(this.myTree);
     console.log(event);
