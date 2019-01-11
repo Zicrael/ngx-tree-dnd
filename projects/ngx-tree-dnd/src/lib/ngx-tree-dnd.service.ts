@@ -32,6 +32,7 @@ export class NgxTreeService {
   onStartRenameItem = new Subject<any>();
   onFinishRenameItem = new Subject<any>();
   onRemoveItem = new Subject<any>();
+  onDeleteEnd = new Subject<any>();
   config = new BehaviorSubject<any>(null);
   defaulConfig: TreeConfig;
 
@@ -168,6 +169,7 @@ export class NgxTreeService {
     this.findingResults.itemsList.splice(i, 1);
     this.clearAction();
     this.checkTreeLength();
+    this.onDeleteEnd.next();
   }
 
   /*
@@ -297,9 +299,8 @@ export class NgxTreeService {
     this.removeDestenationBorders(this.treeStorage);
     this.switchDropButton(false, this.treeStorage);
     this.clearAction();
-    setTimeout(() => {
-      this.checkTreeLength();
-    });
+    this.checkTreeLength();
+    this.onDragEnd.next();
   }
 
   /*
@@ -307,31 +308,29 @@ export class NgxTreeService {
     need set direction before use
   */
   private changeItemPosition(el, direction) {
-    setTimeout( () => {
-      this.elementFinder(this.treeStorage, this.isDragging.id);
-      const i = this.findingResults.itemsList.indexOf(this.findingResults.foundItem);
-      const copyItem = this.findingResults.itemsList.splice(i, 1)[0];
-      // end test
-      const positionTarget = el.options.position;
-      this.elementFinder(this.treeStorage, el.id);
-      if (direction === 'up') {
-        for (const items of this.findingResults.itemsList) {
-          if ( items.options.position >= positionTarget ) {
-            items.options.position = items.options.position + 1;
-            copyItem.options.position = positionTarget;
-          }
-        }
-      } else {
-        for (const items of this.findingResults.itemsList) {
-          if ( items.options.position <=  positionTarget ) {
-            items.options.position = items.options.position - 1;
-          }
+    this.elementFinder(this.treeStorage, this.isDragging.id);
+    const i = this.findingResults.itemsList.indexOf(this.findingResults.foundItem);
+    const copyItem = this.findingResults.itemsList.splice(i, 1)[0];
+    // end test
+    const positionTarget = el.options.position;
+    this.elementFinder(this.treeStorage, el.id);
+    if (direction === 'up') {
+      for (const items of this.findingResults.itemsList) {
+        if ( items.options.position >= positionTarget ) {
+          items.options.position = items.options.position + 1;
+          copyItem.options.position = positionTarget;
         }
       }
-      copyItem.options.position = positionTarget;
-      this.findingResults.itemsList.push(copyItem);
-      this.sortTree();
-    });
+    } else {
+      for (const items of this.findingResults.itemsList) {
+        if ( items.options.position <=  positionTarget ) {
+          items.options.position = items.options.position - 1;
+        }
+      }
+    }
+    copyItem.options.position = positionTarget;
+    this.findingResults.itemsList.push(copyItem);
+    this.sortTree();
   }
 
   // get position of item

@@ -44,6 +44,7 @@ export class NgxTreeParentComponent implements AfterViewInit {
   @Output() onStartRenameItem: EventEmitter<any> = new EventEmitter();
   @Output() onFinishRenameItem: EventEmitter<any> = new EventEmitter();
   @Output() onremoveitem: EventEmitter<any> = new EventEmitter();
+  @Output() onremoveend: EventEmitter<any> = new EventEmitter();
 
   @Input()
   set config(config: TreeConfig) {
@@ -124,11 +125,13 @@ export class NgxTreeParentComponent implements AfterViewInit {
     );
     this.treeService.onStartRenameItem.subscribe(
       (event) => {
+        this.cd.detectChanges();
         this.onStartRenameItem.emit(event);
       }
     );
     this.treeService.onFinishRenameItem.subscribe(
       (event) => {
+        this.cd.detectChanges();
         this.onFinishRenameItem.emit(event);
       }
     );
@@ -137,6 +140,12 @@ export class NgxTreeParentComponent implements AfterViewInit {
         this.onremoveitem.emit(event);
       }
     );
+    this.treeService.onDeleteEnd.subscribe(
+      (event) => {
+        this.cd.detectChanges();
+        this.onremoveend.emit(event);
+      }
+    )
     this.treeService.onDragEnter.subscribe(
       (event) => {
         this.ondragenter.emit(event);
@@ -155,9 +164,7 @@ export class NgxTreeParentComponent implements AfterViewInit {
     this.treeService.getLocalData(userTree).subscribe(
       (tree: TreeModel[]) => {
         this.treeView = tree;
-        setTimeout( () => {
           this.treeService.sortTree();
-        });
       }, (error) => {
         console.log(error);
       }
