@@ -4,7 +4,7 @@ import { FormBuilder, Validators } from '@angular/forms';
  This project is licensed under the terms of the MIT license.
  https://github.com/Zicrael/ngx-tree-dnd
  */
-import { Component, Input, Output, EventEmitter, AfterViewInit, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Input, Output, EventEmitter, AfterViewInit } from '@angular/core';
 
 import { NgxTreeService } from '../ngx-tree-dnd.service';
 import { TreeModel, TreeConfig } from '../models/tree-view.model';
@@ -66,7 +66,7 @@ export class NgxTreeParentComponent implements AfterViewInit {
       this.getTreeData(item);
   }
 
-  constructor(public treeService: NgxTreeService, private fb: FormBuilder, private cd: ChangeDetectorRef) {
+  constructor(public treeService: NgxTreeService, private fb: FormBuilder ) {
     this.enableSubscribers();
     this.createForm();
   }
@@ -85,35 +85,25 @@ export class NgxTreeParentComponent implements AfterViewInit {
     this.userConfig[item] = config[item];
   }
 
-  ddCh: number = 1;
-
   // subscribe to all events and emit them to user.
   enableSubscribers() {
     this.treeService.onDrop.subscribe(
       (event) => {
-        this.cd.detectChanges();
         this.ondrop.emit(event);
       }
     );
     this.treeService.onDragStart.subscribe(
       (event) => {
-        this.ddCh = 1;
         this.ondragstart.emit(event);
       }
     );
     this.treeService.onAllowDrop.subscribe(
       (event) => {
-        if(this.ddCh == 0) 
-          this.cd.detectChanges();
-        else
-          this.ddCh = 0;
         this.onallowdrop.emit(event);
       }
     );
     this.treeService.onDragEnd.subscribe(
       (event) => {
-        this.ddCh = 1;
-        this.cd.detectChanges();
         this.ondragend.emit(event);
       }
     );
@@ -144,7 +134,6 @@ export class NgxTreeParentComponent implements AfterViewInit {
     );
     this.treeService.onDragLeave.subscribe(
       (event) => {
-        this.cd.detectChanges();
         this.ondragleave.emit(event);
       }
     );
