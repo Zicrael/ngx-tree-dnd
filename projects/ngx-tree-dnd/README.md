@@ -330,7 +330,7 @@ in you template file:
 in you component file:
 
 ```typescript
-    onStartDelete(event) {
+  onStartDelete(event) {
     console.log(event);
   }
 ```
@@ -348,7 +348,7 @@ in you template file:
 in you component file:
 
 ```typescript
-    onFinishDelete(event) {
+  onFinishDelete(event) {
     console.log(event);
   }
 ```
@@ -366,7 +366,7 @@ in you template file:
 in you component file:
 
 ```typescript
-    onCancelDelete(event) {
+  onCancelDelete(event) {
     console.log(event);
   }
 ```
