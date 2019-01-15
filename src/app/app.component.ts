@@ -12,6 +12,7 @@ export class AppComponent {
     showAddButtons: true,
     showRenameButtons: true,
     showDeleteButtons: true,
+    showRootActionButtons: true,
     enableExpandButtons: true,
     enableDragging: true,
     rootTitle: 'My Tree',
@@ -76,7 +77,18 @@ export class AppComponent {
     console.log(this.myTree);
     console.log(event);
   }
-  onDelete(event) {
+  onStartDelete(event) {
+    console.log('on start delete item');
+    console.log(this.myTree);
+    console.log(event);
+  }
+  onFinishDelete(event) {
+    console.log('on finish delete item');
+    console.log(this.myTree);
+    console.log(event);
+  }
+  onCancelDelete(event) {
+    console.log('on cancel delete item');
     console.log(this.myTree);
     console.log(event);
   }

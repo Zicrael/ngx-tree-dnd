@@ -20,6 +20,7 @@ export class NgxTreeParentComponent implements AfterViewInit {
       showAddButtons: true,
       showRenameButtons: true,
       showDeleteButtons: true,
+      showRootActionButtons: true,
       enableExpandButtons: true,
       enableDragging: true,
       rootTitle: 'Root',
@@ -43,7 +44,9 @@ export class NgxTreeParentComponent implements AfterViewInit {
   @Output() onadditem: EventEmitter<any> = new EventEmitter();
   @Output() onStartRenameItem: EventEmitter<any> = new EventEmitter();
   @Output() onFinishRenameItem: EventEmitter<any> = new EventEmitter();
-  @Output() onremoveitem: EventEmitter<any> = new EventEmitter();
+  @Output() onStartDeleteItem: EventEmitter<any> = new EventEmitter();
+  @Output() onFinishDeleteItem: EventEmitter<any> = new EventEmitter();
+  @Output() onCancelDeleteItem: EventEmitter<any> = new EventEmitter();
 
   @Input()
   set config(config: TreeConfig) {
@@ -122,9 +125,19 @@ export class NgxTreeParentComponent implements AfterViewInit {
         this.onFinishRenameItem.emit(event);
       }
     );
-    this.treeService.onRemoveItem.subscribe(
+    this.treeService.onStartDeleteItem.subscribe(
       (event) => {
-        this.onremoveitem.emit(event);
+        this.onStartDeleteItem.emit(event);
+      }
+    );
+    this.treeService.onFinishDeleteItem.subscribe(
+      (event) => {
+        this.onFinishDeleteItem.emit(event);
+      }
+    );
+    this.treeService.onCancelDeleteItem.subscribe(
+      (event) => {
+        this.onCancelDeleteItem.emit(event);
       }
     );
     this.treeService.onDragEnter.subscribe(

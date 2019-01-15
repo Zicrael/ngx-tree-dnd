@@ -4,7 +4,7 @@
         {{userConfig.rootTitle}}
       </div>
       
-      <div class='d-flex buttons-bar' *ngIf="userConfig.showActionButtons">
+      <div class='d-flex buttons-bar' *ngIf="userConfig.showActionButtons && userConfig.showRootActionButtons">
         <div class='d-flex'>
           <button class="tree-btn add-btn" *ngIf="userConfig.showAddButtons" (click)="submitAdd(null)">
             <fa-icon icon="plus" [style.font-size.px]='userConfig.setIconSize'></fa-icon>

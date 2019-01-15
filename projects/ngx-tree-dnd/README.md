@@ -317,23 +317,60 @@ in you component file:
   }
 ```
 
-### onremoveitem()
-Trigger removing action item
+### onStartDeleteItem()
+Trigger start Deleting action item
 
 #### example 
 
 in you template file:
 
 ```xml
-<lib-ngx-tree-component [treeData]='youTree' (onremoveitem)='onRemoveItem($event)'> </lib-ngx-tree-component>
+<lib-ngx-tree-component [treeData]='youTree' (onStartDeleteItem)='onStartDelete($event)'> </lib-ngx-tree-component>
 ```
 in you component file:
 
 ```typescript
-    onRemoveItem(event) {
+    onStartDelete(event) {
     console.log(event);
   }
 ```
+
+### onFinishDeleteItem()
+Trigger finish deleting action item
+
+#### example 
+
+in you template file:
+
+```xml
+<lib-ngx-tree-component [treeData]='youTree' (onFinishDeleteItem)='onFinishDelete($event)'> </lib-ngx-tree-component>
+```
+in you component file:
+
+```typescript
+    onFinishDelete(event) {
+    console.log(event);
+  }
+```
+
+### onCancelDeleteItem()
+Trigger cancel deleting action item
+
+#### example 
+
+in you template file:
+
+```xml
+<lib-ngx-tree-component [treeData]='youTree' (onCancelDeleteItem)='onCancelDelete($event)'> </lib-ngx-tree-component>
+```
+in you component file:
+
+```typescript
+    onCancelDelete(event) {
+    console.log(event);
+  }
+```
+
 
 ### 3. Config
 
@@ -354,6 +391,7 @@ in you component file:
       showAddButtons: true, // show/hide add button for all elements
       showRenameButtons: true, // show/hide rename buttons for all elements
       showDeleteButtons: true, // show/hide delete buttons for all elements
+      showRootActionButtons: true, // shlow/hide root action bottons
       enableExpandButtons: true, // // show/hide expand buttons for all elements
       enableDragging: true, // enable/disable dragging
       rootTitle: 'Root', // Tree titile name
