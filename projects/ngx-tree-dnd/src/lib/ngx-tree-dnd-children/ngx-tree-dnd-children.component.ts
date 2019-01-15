@@ -133,7 +133,10 @@ export class NgxTreeChildrenComponent implements AfterViewInit {
   }
 
   /*
-    Event: onremoveitem;
+    Events:
+    onStartDeleteItem,
+    onFinishDeleteItem,    
+    onCancelDeleteItem.
     Check is item edit, then if name empty delete item.
     Call deleteItem() from tree service.
   */

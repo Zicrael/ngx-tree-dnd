@@ -31,7 +31,9 @@ export class NgxTreeService {
   onRenameItem = new Subject<any>();
   onStartRenameItem = new Subject<any>();
   onFinishRenameItem = new Subject<any>();
-  onRemoveItem = new Subject<any>();
+  onStartDeleteItem = new Subject<any>();
+  onFinishDeleteItem = new Subject<any>();
+  onCancelDeleteItem = new Subject<any>();
   config = new BehaviorSubject<any>(null);
   defaulConfig: TreeConfig;
 
@@ -42,6 +44,7 @@ export class NgxTreeService {
       showAddButtons: true,
       showRenameButtons: true,
       showDeleteButtons: true,
+      showRootActionButtons: true,
       enableExpandButtons: true,
       enableDragging: true,
       rootTitle: 'Root',
@@ -155,7 +158,9 @@ export class NgxTreeService {
   /*
    Delete element.
    It`s accepts 'id' for find item on tree.
-   Emit onRemoveItem Subject.
+   Emit onStartDeleteItem Subject before delete.
+   Emit onFinishDeleteItem Subject after submit delete.
+   Emit onCancelDeleteItem Subject after on cancel delete.
   */
   public deleteItem(id) {
     this.elementFinder(this.treeStorage, id);
@@ -163,9 +168,20 @@ export class NgxTreeService {
       element: this.findingResults.foundItem,
       parent: this.findingResults.parentItem || 'root'
     };
-    this.onRemoveItem.next(eventEmit);
-    const i = this.findingResults.itemsList.indexOf(this.findingResults.foundItem);
-    this.findingResults.itemsList.splice(i, 1);
+    this.onStartDeleteItem.next(eventEmit);
+    let text: string;
+    if( this.findingResults.foundItem.name ) {
+      text = `Do you really want to delete '${this.findingResults.foundItem.name}'?`;
+    } else {
+      text = `Cancel creating a new item?`;
+    }
+    if(confirm(text)) {
+      this.onFinishDeleteItem.next(eventEmit);
+      const i = this.findingResults.itemsList.indexOf(this.findingResults.foundItem);
+      this.findingResults.itemsList.splice(i, 1);
+    } else {
+      this.onCancelDeleteItem.next(eventEmit);
+    }
     this.clearAction();
     this.checkTreeLength();
   }
