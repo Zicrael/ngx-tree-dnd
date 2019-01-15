@@ -74,22 +74,6 @@ export class NgxTreeService {
     return data;
   }
 
-/**
- * Flatten the tree into a list collection
- * @param tree 
- * @param key 
- * @param collection 
- */
-  private bfs (tree, key, collection) {
-    if (!tree[key] || tree[key].length === 0) return;
-    for (var i = 0; i < tree[key].length; i++) {
-      var child = tree[key][i]
-      collection[child.id] = child;
-      this.bfs(child, key, collection);
-    }
-    return;
-  }
-
   /*
    Element finder, it`s find element by id in tree.
    Returns: finded element, parent array.
@@ -351,7 +335,7 @@ export class NgxTreeService {
   }
 
   // get position of item
-  getItemPosition(item) {
+  public getItemPosition(item) {
     this.elementFinder(this.treeStorage, item.id);
     let position = this.findingResults.itemsList.indexOf(this.findingResults.foundItem);
     return ++position;
@@ -384,7 +368,7 @@ export class NgxTreeService {
   }
 
   // clear selectedElement && isDragging from element finder.
-  private clearAction() {
+  public clearAction() {
     this.findingResults = null;
   }
 
