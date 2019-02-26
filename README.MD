@@ -354,7 +354,7 @@ in you component file:
 ```
 
 ### onCancelDeleteItem()
-Trigger start Deleting action item
+Trigger cancel Deleting action item
 
 #### example 
 
