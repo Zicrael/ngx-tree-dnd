@@ -336,7 +336,7 @@ in you component file:
 ```
 
 ### onFinishDeleteItem()
-Trigger start Deleting action item
+Trigger end Deleting action item
 
 #### example 
 
