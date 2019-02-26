@@ -307,7 +307,7 @@ Trigger finish renaming item after validation
 in you template file:
 
 ```xml
-<lib-ngx-tree-component [treeData]='youTree' (onStartRenameItem)='onFinishRenameItem($event)'> </lib-ngx-tree-component>
+<lib-ngx-tree-component [treeData]='youTree' (onFinishRenameItem)='onFinishRenameItem($event)'> </lib-ngx-tree-component>
 ```
 in you component file:
 
