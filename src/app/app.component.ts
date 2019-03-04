@@ -23,54 +23,54 @@ export class AppComponent {
     setIconSize: 16
   };
   myTree = [
-    {
-      name: 'item - 1',
-      id: 123,
-      options: {
-        href: 'FFFFFFFFFFF',
-        showActionButtons: true,
-        showDropChildZone: false,
-        showExpandButton: true,
-        draggable: false,
-        disabled: false,
-        hideChildrens: false,
-      },
-      childrens: [
-        {
-          name: 'child - item - 1',
-          id: 456,
-          options: {
+    // {
+    //   name: 'item - 1',
+    //   id: 123,
+    //   options: {
+    //     href: 'FFFFFFFFFFF',
+    //     showActionButtons: true,
+    //     showDropChildZone: false,
+    //     showExpandButton: true,
+    //     draggable: false,
+    //     disabled: false,
+    //     hideChildrens: false,
+    //   },
+    //   childrens: [
+    //     {
+    //       name: 'child - item - 1',
+    //       id: 456,
+    //       options: {
 
-          },
-          childrens: [
-            {
-              name: 'deep - item - 1',
-              id: 1222,
-              options: {
+    //       },
+    //       childrens: [
+    //         {
+    //           name: 'deep - item - 1',
+    //           id: 1222,
+    //           options: {
 
-              },
-              childrens: []
-            },
-          ]
-        },
-      ]
-    },
-    {
-      name: 'item - 2',
-      id: 1533,
-      options: {
+    //           },
+    //           childrens: []
+    //         },
+    //       ]
+    //     },
+    //   ]
+    // },
+    // {
+    //   name: 'item - 2',
+    //   id: 1533,
+    //   options: {
 
-      },
-      childrens: []
-    },
-    {
-      name: 'item - 3',
-      id: 9683,
-      options: {
+    //   },
+    //   childrens: []
+    // },
+    // {
+    //   name: 'item - 3',
+    //   id: 9683,
+    //   options: {
 
-      },
-      childrens: []
-    }
+    //   },
+    //   childrens: []
+    // }
   ];
 
   onDrop(event) {

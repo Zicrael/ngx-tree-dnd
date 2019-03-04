@@ -64,7 +64,6 @@ export class NgxTreeService {
     const data = new Observable(observer => {
     this.treeStorage = item;
       if ( this.treeStorage && this.treeStorage !== null ) {
-        this.checkTreeLength();
         observer.next(this.treeStorage);
       } else {
         this.treeStorage  = JSON.parse('[]');
@@ -121,20 +120,18 @@ export class NgxTreeService {
       },
       childrens: []
     };
-    
     if(parent != null) {
       this.elementFinder(this.treeStorage, parent ? parent.id : null);
       this.findingResults && this.findingResults.foundItem.childrens.push(createObj);
-    }
-    else{
+      parent = this.findingResults.foundItem
+    }  else{
+      parent = 'root'
       this.treeStorage.push(createObj);
     }
-    
     const eventEmit = {
       element: createObj,
-      parent: parent ? this.findingResults.foundItem : 'root'
+      parent 
     };
-
     this.onAddItem.next(eventEmit);
     this.clearAction();
   }
@@ -167,7 +164,6 @@ export class NgxTreeService {
       this.onCancelDeleteItem.next(eventEmit);
     }
     this.clearAction();
-    this.checkTreeLength();
   }
 
   /*
@@ -297,9 +293,6 @@ export class NgxTreeService {
     this.removeDestenationBorders(this.treeStorage);
     this.switchDropButton(false, this.treeStorage);
     this.clearAction();
-    setTimeout(() => {
-      this.checkTreeLength();
-    });
   }
 
   /*
@@ -383,25 +376,13 @@ export class NgxTreeService {
   }
 
   private switchDropButton(bool, data) {
-      for (const el of data) {
-        el.options.showActionButtons = !bool;
-        if (el.id !== this.isDragging.id) {
-          el.options.showDropChildZone = bool;
-        }
-        if (el.childrens.length > 0) {
-          this.switchDropButton(bool, el.childrens);
-        }
+    for (const el of data) {
+      el.options.showActionButtons = !bool;
+      if (el.id !== this.isDragging.id) {
+        el.options.showDropChildZone = bool;
       }
-  }
-
-  public checkTreeLength() {
-    if (this.treeStorage.length < 2) {
-      this.treeStorage[0].options.showDeleteButton = false;
-    } else {
-      for (const el of this.treeStorage) {
-        if (el && el.options) {
-          el.options.showDeleteButton = true;
-        }
+      if (el.childrens.length > 0) {
+        this.switchDropButton(bool, el.childrens);
       }
     }
   }
