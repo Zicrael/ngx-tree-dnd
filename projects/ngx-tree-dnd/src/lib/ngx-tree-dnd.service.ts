@@ -120,20 +120,18 @@ export class NgxTreeService {
       },
       childrens: []
     };
-    
     if(parent != null) {
       this.elementFinder(this.treeStorage, parent ? parent.id : null);
       this.findingResults && this.findingResults.foundItem.childrens.push(createObj);
-    }
-    else{
+      parent = this.findingResults.foundItem
+    }  else{
+      parent = 'root'
       this.treeStorage.push(createObj);
     }
-    
     const eventEmit = {
       element: createObj,
-      parent: parent ? this.findingResults.foundItem : 'root'
+      parent 
     };
-
     this.onAddItem.next(eventEmit);
     this.clearAction();
   }

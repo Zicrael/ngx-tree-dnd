@@ -31,7 +31,7 @@ describe('NgxTreeService', () => {
     });
 
 
-    it('service method addNewItem work fine with parent', (done) => {
+    it('service method addNewItem work fine without parent', (done) => {
         const createObj = {
             id: 333,
             name: 'newEl',
@@ -48,6 +48,36 @@ describe('NgxTreeService', () => {
             done();
         })
         service.addNewItem(333, 'newEl');
+        expect(clearActionSpy).toHaveBeenCalled();
+    });
+    it('service method addNewItem work fine with parent', (done) => {
+        const createObj = {
+            id: 333,
+            name: 'newEl',
+            options:  {
+              position: 1,
+              edit: true
+            },
+            childrens: []
+        };
+        const parentObj = {
+            id: 333,
+            name: 'parentEl',
+            options:  {
+              position: 1,
+              edit: true
+            },
+            childrens: []
+        }
+        const clearActionSpy = spyOn(service, 'clearAction');
+        service.treeStorage = [parentObj];
+        service.onAddItem.subscribe((event) => {
+            expect(event.element).toEqual(createObj);
+            expect(event.parent).toBe(parentObj);
+            done();
+        })
+        service.addNewItem(333, 'newEl', parentObj);
+        // tests required
         expect(clearActionSpy).toHaveBeenCalled();
     });
 

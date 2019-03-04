@@ -307,7 +307,7 @@ Trigger finish renaming item after validation
 in you template file:
 
 ```xml
-<lib-ngx-tree-component [treeData]='youTree' (onStartRenameItem)='onFinishRenameItem($event)'> </lib-ngx-tree-component>
+<lib-ngx-tree-component [treeData]='youTree' (onFinishRenameItem)='onFinishRenameItem($event)'> </lib-ngx-tree-component>
 ```
 in you component file:
 
@@ -336,7 +336,7 @@ in you component file:
 ```
 
 ### onFinishDeleteItem()
-Trigger start Deleting action item
+Trigger end Deleting action item
 
 #### example 
 
@@ -354,7 +354,7 @@ in you component file:
 ```
 
 ### onCancelDeleteItem()
-Trigger start Deleting action item
+Trigger cancel Deleting action item
 
 #### example 
 
