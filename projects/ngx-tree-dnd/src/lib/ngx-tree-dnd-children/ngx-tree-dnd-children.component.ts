@@ -95,6 +95,15 @@ export class NgxTreeChildrenComponent implements AfterViewInit {
     });
   }
 
+    /*
+    Event: onClick;
+    Element was clicked
+    Call click() from tree service.
+  */
+  submitClick(element) {
+    this.treeService.clickItem(element);
+  }
+
   /*
     Event: onStartRenameItem;
     Enable rename mode in element

@@ -283,6 +283,23 @@ in you component file:
   }
 ```
 
+### onClickItem()
+Trigger item was clicked
+#### example 
+
+in you template file:
+
+```xml
+<lib-ngx-tree-component [treeData]='youTree' (onClick)='onClickItem($event)'> </lib-ngx-tree-component>
+```
+in you component file:
+
+```typescript
+  onClickItem(event) {
+    console.log(event);
+  }
+```
+
 ### onStartRenameItem()
 Trigger start renaming item
 #### example 

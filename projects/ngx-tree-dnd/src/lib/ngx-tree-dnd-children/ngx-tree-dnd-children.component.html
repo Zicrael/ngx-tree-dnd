@@ -3,7 +3,7 @@
     <div *ngIf='config' [ngClass]="{hidden : element.options.hidden}">
       <div class='tree-title d-inline-flex pos-relative' [ngClass]="{destenationTop : element.options.destenationTop, destenationBottom: element.options.destenationBottom}" *ngIf="!element.options.edit;else onEdit">
         <div *ngIf="!config.setItemsAsLinks; else link" [ngClass]="{addOpacity : element.options.currentlyDragging}" libDropElement
-          [item]='element' class='draggable-item'>
+          [item]='element' class='draggable-item' (click)="submitClick(element)">
           {{element.name}}
         </div>
         <ng-template #link>

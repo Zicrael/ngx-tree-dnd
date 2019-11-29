@@ -101,6 +101,11 @@ export class AppComponent {
     console.log(this.myTree);
     console.log(event);
   }
+  onClickItem(event) {
+    console.log('click');
+    console.log(this.myTree);
+    console.log(event);
+  }
   onFinishRenameItem(event) {
     console.log('finish rename');
     console.log(this.myTree);
