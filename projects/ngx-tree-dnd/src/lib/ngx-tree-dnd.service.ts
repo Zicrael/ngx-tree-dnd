@@ -28,6 +28,8 @@ export class NgxTreeService {
   onAllowDrop = new Subject<any>();
   onDragEnd = new Subject<any>();
   onClickItem = new Subject<any>();
+  onMouseEnterItem = new Subject<any>();
+  onMouseLeaveItem = new Subject<any>();
   onAddItem = new Subject<any>();
   onRenameItem = new Subject<any>();
   onStartRenameItem = new Subject<any>();
@@ -180,6 +182,28 @@ export class NgxTreeService {
       parent: this.findingResults.parentItem || 'root'
     };
     this.onClickItem.next(eventEmit);
+  }
+
+  public mouseEnterItem(element, event) {
+    this.elementFinder(this.treeStorage, element.id);
+    // event emit
+    const eventEmit = {
+      event: event,
+      element: this.findingResults.foundItem,
+      parent: this.findingResults.parentItem || 'root'
+    };
+    this.onMouseEnterItem.next(eventEmit);
+  }
+
+  public mouseLeaveItem(element, event) {
+    this.elementFinder(this.treeStorage, element.id);
+    // event emit
+    const eventEmit = {
+      event: event,
+      element: this.findingResults.foundItem,
+      parent: this.findingResults.parentItem || 'root'
+    };
+    this.onMouseLeaveItem.next(eventEmit);
   }
 
   /*

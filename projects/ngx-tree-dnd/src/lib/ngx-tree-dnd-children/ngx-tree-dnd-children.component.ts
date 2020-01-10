@@ -95,13 +95,31 @@ export class NgxTreeChildrenComponent implements AfterViewInit {
     });
   }
 
-    /*
+  /*
     Event: onClick;
     Element was clicked
     Call click() from tree service.
   */
   submitClick(element) {
     this.treeService.clickItem(element);
+  }
+
+  /*
+    Event: onMouseEnter;
+    Element was triggered
+    Call mouseEnter() from tree service.
+  */
+  submitMouseenter(element, event) {
+    this.treeService.mouseEnterItem(element, event);
+  }
+
+  /*
+    Event: onMouseLeave;
+    Element was triggered
+    Call mouseLeave() from tree service.
+  */
+  submitMouseleave(element, event) {
+    this.treeService.mouseLeaveItem(element, event);
   }
 
   /*

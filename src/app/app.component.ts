@@ -106,6 +106,16 @@ export class AppComponent {
     console.log(this.myTree);
     console.log(event);
   }
+  onMouseEnterItem(event) {
+    console.log('mouse enter');
+    console.log(this.myTree);
+    console.log(event);
+  }
+  onMouseLeaveItem(event) {
+    console.log('mouse leave');
+    console.log(this.myTree);
+    console.log(event);
+  }
   onFinishRenameItem(event) {
     console.log('finish rename');
     console.log(this.myTree);
