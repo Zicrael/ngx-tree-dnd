@@ -42,6 +42,9 @@ export class NgxTreeParentComponent implements AfterViewInit {
   @Output() onallowdrop: EventEmitter<any> = new EventEmitter();
   @Output() ondragend: EventEmitter<any> = new EventEmitter();
   @Output() onadditem: EventEmitter<any> = new EventEmitter();
+  @Output() onClickItem: EventEmitter<any> = new EventEmitter();
+  @Output() onMouseEnterItem: EventEmitter<any> = new EventEmitter();
+  @Output() onMouseLeaveItem: EventEmitter<any> = new EventEmitter();
   @Output() onStartRenameItem: EventEmitter<any> = new EventEmitter();
   @Output() onFinishRenameItem: EventEmitter<any> = new EventEmitter();
   @Output() onStartDeleteItem: EventEmitter<any> = new EventEmitter();
@@ -115,6 +118,21 @@ export class NgxTreeParentComponent implements AfterViewInit {
         this.onadditem.emit(event);
       }
     );
+    this.treeService.onClickItem.subscribe(
+        (event) => {
+          this.onClickItem.emit(event);
+        }
+      );
+    this.treeService.onMouseEnterItem.subscribe(
+        (event) => {
+          this.onMouseEnterItem.emit(event);
+        }
+      );
+    this.treeService.onMouseLeaveItem.subscribe(
+        (event) => {
+          this.onMouseLeaveItem.emit(event);
+        }
+      );
     this.treeService.onStartRenameItem.subscribe(
       (event) => {
         this.onStartRenameItem.emit(event);

@@ -27,6 +27,9 @@ export class NgxTreeService {
   onDrag = new Subject<any>();
   onAllowDrop = new Subject<any>();
   onDragEnd = new Subject<any>();
+  onClickItem = new Subject<any>();
+  onMouseEnterItem = new Subject<any>();
+  onMouseLeaveItem = new Subject<any>();
   onAddItem = new Subject<any>();
   onRenameItem = new Subject<any>();
   onStartRenameItem = new Subject<any>();
@@ -164,6 +167,43 @@ export class NgxTreeService {
       this.onCancelDeleteItem.next(eventEmit);
     }
     this.clearAction();
+  }
+
+  /*
+   Trigger click on element.
+   It`s accepts 'name' and 'id' for find item on tree and set the name.
+   Emit onClickItem Subject.
+  */
+ public clickItem(element) {
+    this.elementFinder(this.treeStorage, element.id);
+    // event emit
+    const eventEmit = {
+      element: this.findingResults.foundItem,
+      parent: this.findingResults.parentItem || 'root'
+    };
+    this.onClickItem.next(eventEmit);
+  }
+
+  public mouseEnterItem(element, event) {
+    this.elementFinder(this.treeStorage, element.id);
+    // event emit
+    const eventEmit = {
+      event: event,
+      element: this.findingResults.foundItem,
+      parent: this.findingResults.parentItem || 'root'
+    };
+    this.onMouseEnterItem.next(eventEmit);
+  }
+
+  public mouseLeaveItem(element, event) {
+    this.elementFinder(this.treeStorage, element.id);
+    // event emit
+    const eventEmit = {
+      event: event,
+      element: this.findingResults.foundItem,
+      parent: this.findingResults.parentItem || 'root'
+    };
+    this.onMouseLeaveItem.next(eventEmit);
   }
 
   /*

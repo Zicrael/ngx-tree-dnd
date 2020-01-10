@@ -3,6 +3,9 @@
   <lib-ngx-tree-component 
   [treeData]='myTree'
   (ondrop)='onDrop($event)' 
+  (onClickItem)="onClickItem($event)"
+  (onMouseEnterItem)="onMouseEnterItem($event)"
+  (onMouseLeaveItem)="onMouseLeaveItem($event)"
   (onStartRenameItem)="onStartRenameItem($event)"
   (onFinishRenameItem)='onFinishRenameItem($event)'
   (onStartDeleteItem)='onStartDelete($event)'

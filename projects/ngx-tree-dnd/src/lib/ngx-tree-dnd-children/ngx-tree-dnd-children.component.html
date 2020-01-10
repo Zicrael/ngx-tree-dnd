@@ -1,9 +1,9 @@
 <div class='tree-child' id={{element.id}} libDragElement [draggableValue]='element.options.draggable' [item]='element' [ngClass]="{disabled : element.options.disabled}">
   <div *ngIf="element && element.options" class='d-flex'>
     <div *ngIf='config' [ngClass]="{hidden : element.options.hidden}">
-      <div class='tree-title d-inline-flex pos-relative' [ngClass]="{destenationTop : element.options.destenationTop, destenationBottom: element.options.destenationBottom}" *ngIf="!element.options.edit;else onEdit">
+      <div class='tree-title d-inline-flex pos-relative' [ngClass]="{destenationTop : element.options.destenationTop, destenationBottom: element.options.destenationBottom}" *ngIf="!element.options.edit;else onEdit" >
         <div *ngIf="!config.setItemsAsLinks; else link" [ngClass]="{addOpacity : element.options.currentlyDragging}" libDropElement
-          [item]='element' class='draggable-item'>
+          [item]='element' class='draggable-item' (click)="submitClick(element)"  (mouseenter)="submitMouseenter(element, $event)" (mouseleave)="submitMouseleave(element, $event)">
           {{element.name}}
         </div>
         <ng-template #link>
