@@ -7,14 +7,16 @@
     "build": "ng build ngx-tree-dnd --prod",
     "test": "ng test ngx-tree-dnd",
     "lint": "ng lint ngx-tree-dnd",
-    "e2e": "ng e2e ngx-tree-dnd"
+    "e2e": "ng e2e ngx-tree-dnd",
+    "prepare": "npm run snyk-protect",
+    "snyk-protect": "snyk-protect"
   },
   "private": true,
   "dependencies": {
     "@angular/animations": "^7.0.4",
     "@angular/common": "^7.0.4",
     "@angular/compiler": "^7.0.4",
-    "@angular/core": "^7.0.4",
+    "@angular/core": "^11.0.5",
     "@angular/forms": "^7.0.4",
     "@angular/http": "^7.0.4",
     "@angular/platform-browser": "^7.0.4",
@@ -27,7 +29,8 @@
     "karma-phantomjs-launcher": "^1.0.4",
     "ngx-tree-dnd": "^2.3.0",
     "rxjs": "^6.0.0",
-    "zone.js": "^0.8.26"
+    "zone.js": "^0.8.26",
+    "@snyk/protect": "latest"
   },
   "devDependencies": {
     "@angular/compiler-cli": "^7.0.4",
@@ -53,5 +56,6 @@
     "protractor": "~5.3.0",
     "ts-node": "~5.0.1",
     "tslint": "~5.9.1"
-  }
+  },
+  "snyk": true
 }
